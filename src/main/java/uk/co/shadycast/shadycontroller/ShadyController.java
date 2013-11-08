@@ -6,13 +6,13 @@ import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
+import uk.co.shadycast.shadycontroller.Storage.Config;
 import uk.co.shadycast.shadycontroller.Storage.DB;
 
 
 public class ShadyController extends JavaPlugin{
     public static HashMap<String,SServer> Servers;
     public static HashMap<String,SPlayer> Players;
-    
     @Override
     public void onDisable(){
         
@@ -45,6 +45,12 @@ public class ShadyController extends JavaPlugin{
      */
     public static SServer getServer(String BungeeID){return Servers.get(BungeeID);}
     /**
+     * Returns a Shady Server usable for DB access and to get info from
+     * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
+     * @return SServer A registered servers on the network
+     */
+    public static SServer getThisServer(){return Servers.get(Config.BungeeID);}
+    /**
      * Updates the specified Shady Servers Max player value
      * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
      * @param PlayerCount The Value for Max Players for the Shady Server
@@ -54,7 +60,6 @@ public class ShadyController extends JavaPlugin{
      * Updates the specified Shady Servers Current player value 
      * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
      * @param PlayerCount The Value for Max Players for the Shady Server
-     * @deprecated Not to be used in external plugins this is dealt with in the Controller Plugin
      */
-    public static void UpdateCurPlayers(String BungeeID,int PlayerCount){DB.UpdateCurPlayers(getServer(BungeeID), PlayerCount);}
+    private static void UpdateCurPlayers(String BungeeID,int PlayerCount){DB.UpdateCurPlayers(getServer(BungeeID), PlayerCount);}
 }
