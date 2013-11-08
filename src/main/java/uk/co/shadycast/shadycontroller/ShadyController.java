@@ -49,12 +49,12 @@ public class ShadyController extends JavaPlugin{
      * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
      * @param PlayerCount The Value for Max Players for the Shady Server
      */
-    public static void UpdateMaxPlayers(String BungeeID,int PlayerCount){DB.UpdateMaxPlayers(getSServer(BungeeID), PlayerCount);}
+    public static void UpdateMaxPlayers(String BungeeID,int PlayerCount){DB.UpdateMaxPlayers(getServer(BungeeID), PlayerCount);}
     /**
      * Updates the specified Shady Servers Current player value 
      * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
      * @param PlayerCount The Value for Max Players for the Shady Server
      * @deprecated Not to be used in external plugins this is dealt with in the Controller Plugin
      */
-    public static void UpdateCurPlayers(String BungeeID,int PlayerCount){DB.UpdateCurPlayers(getSServer(BungeeID), PlayerCount);}
+    public static void UpdateCurPlayers(String BungeeID,int PlayerCount){DB.UpdateCurPlayers(getServer(BungeeID), PlayerCount);}
 }
