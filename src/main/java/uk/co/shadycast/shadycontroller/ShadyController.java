@@ -32,7 +32,7 @@ public class ShadyController extends JavaPlugin{
      * @param p Any Player logged on to the server already
      * @return SPlayer An Shady Player 
      */
-    public static SPlayer getSPlayer(Player p){return Players.get(p.getName());}
+    public static SPlayer getSPlayer(Player p){return Players.get(p.getDisplayName());}
     /**
      * Returns all Shady Server's usable for DB access and to get info from
      * @return List<SServer> A list of all registered servers on the network
