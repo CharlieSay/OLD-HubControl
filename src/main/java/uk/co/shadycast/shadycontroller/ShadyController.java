@@ -25,7 +25,6 @@ public class ShadyController extends JavaPlugin{
         Players = new HashMap<String,SPlayer>();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         DB.init();
-        //Random Comment Cause GitHubs a Bitch
     }
     
     /**
@@ -45,6 +44,17 @@ public class ShadyController extends JavaPlugin{
      * @return SServer A registered servers on the network
      */
     public static SServer getSServer(String BungeeID){return Servers.get(BungeeID);}
-    
-    
+    /**
+     * Updates the specified Shady Servers Max player value
+     * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
+     * @param PlayerCount The Value for Max Players for the Shady Server
+     */
+    public static void UpdateMaxPlayers(String BungeeID,int PlayerCount){DB.UpdateMaxPlayers(getSServer(BungeeID), PlayerCount);}
+    /**
+     * Updates the specified Shady Servers Current player value 
+     * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
+     * @param PlayerCount The Value for Max Players for the Shady Server
+     * @deprecated Not to be used in external plugins this is dealt with in the Controller Plugin
+     */
+    public static void UpdateCurPlayers(String BungeeID,int PlayerCount){DB.UpdateCurPlayers(getSServer(BungeeID), PlayerCount);}
 }
