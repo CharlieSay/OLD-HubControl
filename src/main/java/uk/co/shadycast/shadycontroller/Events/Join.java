@@ -1,5 +1,6 @@
 package uk.co.shadycast.shadycontroller.Events;
 
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
