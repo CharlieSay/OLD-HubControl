@@ -45,9 +45,8 @@ public class ShadyController extends JavaPlugin{
      */
     public static SServer getServer(String BungeeID){return Servers.get(BungeeID);}
     /**
-     * Returns a Shady Server usable for DB access and to get info from
-     * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
-     * @return SServer A registered servers on the network
+     * Returns the current Shady Server usable for DB access and to get info from
+     * @return SServer The current registered server on the network
      */
     public static SServer getThisServer(){return Servers.get(Config.BungeeID);}
     /**
