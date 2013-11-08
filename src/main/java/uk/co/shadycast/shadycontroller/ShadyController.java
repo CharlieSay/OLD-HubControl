@@ -10,7 +10,7 @@ import uk.co.shadycast.shadycontroller.Storage.DB;
 
 
 public class ShadyController extends JavaPlugin{
-    public static HashMap<Integer,SServer> Servers;
+    public static HashMap<String,SServer> Servers;
     public static HashMap<String,SPlayer> Players;
     
     @Override
@@ -21,7 +21,7 @@ public class ShadyController extends JavaPlugin{
     @Override
     public void onEnable(){
         //If empty config stop load
-        Servers = new HashMap<Integer,SServer>();
+        Servers = new HashMap<String,SServer>();
         Players = new HashMap<String,SPlayer>();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         DB.init();
@@ -33,6 +33,17 @@ public class ShadyController extends JavaPlugin{
      * @return SPlayer An Shady Player 
      */
     public static SPlayer getSPlayer(Player p){return Players.get(p.getDisplayName());}
-    //public static SServer getSServer ();
+    /**
+     * Returns all Shady Server's usable for DB access and to get info from
+     * @return List<SServer> A list of all registered servers on the network
+     */
     public static List<SServer> GetAllServers(){return DB.GetAllServers();}
+    /**
+     * Returns a Shady Server usable for DB access and to get info from
+     * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
+     * @return SServer A registered servers on the network
+     */
+    public static SServer getSServer(String BungeeID){return Servers.get(BungeeID);}
+    
+    
 }
