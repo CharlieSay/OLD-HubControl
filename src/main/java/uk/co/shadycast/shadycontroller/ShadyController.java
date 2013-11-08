@@ -32,7 +32,7 @@ public class ShadyController extends JavaPlugin{
      * @param p Any Player logged on to the server already
      * @return SPlayer An Shady Player 
      */
-    public static SPlayer getSPlayer(Player p){return Players.get(p.getName());}
+    public static SPlayer getPlayer(Player p){return Players.get(p.getName());}
     /**
      * Returns all Shady Server's usable for DB access and to get info from
      * @return List<SServer> A list of all registered servers on the network
@@ -43,7 +43,7 @@ public class ShadyController extends JavaPlugin{
      * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
      * @return SServer A registered servers on the network
      */
-    public static SServer getSServer(String BungeeID){return Servers.get(BungeeID);}
+    public static SServer getServer(String BungeeID){return Servers.get(BungeeID);}
     /**
      * Updates the specified Shady Servers Max player value
      * @param BungeeID The Id of the Bungee server the same as the DB and bungee config
