@@ -8,6 +8,7 @@ import uk.co.shadycast.shadycontroller.Storage.DB;
 
 public class Join implements Listener{
     
+    @EventHandler
     public void Join(PlayerJoinEvent evt){
         SPlayer sp = DB.GetShadyPlayer(evt.getPlayer());
     }
