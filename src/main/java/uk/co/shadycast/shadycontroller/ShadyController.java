@@ -25,6 +25,7 @@ public class ShadyController extends JavaPlugin{
         Players = new HashMap<String,SPlayer>();
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         DB.init();
+        //Random Comment Cause GitHubs a Bitch
     }
     
     /**
