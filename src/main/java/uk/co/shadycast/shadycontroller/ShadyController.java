@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import uk.co.shadycast.shadycontroller.Events.JoinLeave;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
 import uk.co.shadycast.shadycontroller.Storage.DB;
 
@@ -28,8 +29,9 @@ public class ShadyController extends JavaPlugin {
         DB.init();
         Servers = new HashMap<String,SServer>();
         Players = new HashMap<String,SPlayer>();
+        getServer().getPluginManager().registerEvents(new JoinLeave(), this);
         int port = getServer().getPort();
-        BungeeID = DB.getBungeeID(port);
+        //BungeeID = DB.getBungeeID(port);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         
     }

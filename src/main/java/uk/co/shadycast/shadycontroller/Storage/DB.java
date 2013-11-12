@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
@@ -32,7 +33,6 @@ public class DB {
     
         try{
             con = DriverManager.getConnection(url, User, Pass);
-            
         }catch(SQLException e){
             Msg.Console("[SQL ERROR] " +ChatColor.RED+ e);
         }
@@ -85,7 +85,7 @@ public class DB {
     public static void updateStatus(SServer s,String Status){
       try {
             Statement st = con.createStatement();
-            st.executeQuery("UPDATE Servers SET Status="+Status+" WHERE id="+s.getID());
+            st.execute("UPDATE Servers SET Status="+Status+" WHERE id="+s.getID());
     } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -94,7 +94,7 @@ public class DB {
     public static void updateCurPlayers(SServer s,int i){
     try {
             Statement st = con.createStatement();
-            st.executeQuery("UPDATE Servers SET CurPlayers="+i+" WHERE id="+s.getID());
+            st.execute("UPDATE Servers SET CurPlayers="+i+" WHERE id="+s.getID());
     } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -103,17 +103,16 @@ public class DB {
     public static void updateMaxPlayers(SServer s,int i){
     try {
             Statement st = con.createStatement();
-            st.executeQuery("UPDATE Servers SET MaxPlayers="+i+" WHERE id="+s.getID());
+            st.execute("UPDATE Servers SET MaxPlayers="+i+" WHERE id="+s.getID());
     } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static String getBungeeID(int port){
         String ID = null;
-    
         try {
             Statement st = con.createStatement();
-            ResultSet r = st.executeQuery("SELECT * FROM Servers WHERE Port =" + port);
+            ResultSet r = st.executeQuery("SELECT BungeeID FROM Servers WHERE Port='" + port+"'");
             ID = r.getObject("BungeeID", String.class);
         }catch(SQLException ex) {
             Msg.Console("[SQL ERROR] " + ChatColor.RED + ex);
@@ -141,7 +140,7 @@ public class DB {
     public static void setPlayerRank(SPlayer s,String r){
     try {
             Statement st = con.createStatement();
-            st.executeQuery("UPDATE Users SET Rank="+r+" WHERE Name="+s.getName());
+            st.execute("UPDATE Users SET Rank="+r+" WHERE Name="+s.getName());
     } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -149,7 +148,9 @@ public class DB {
     public static void addShadyPlayer(String N,String R,boolean B,Date FJ,Date LJ,int c){
         try {
             Statement st = con.createStatement();
-            st.executeQuery("INSERT IGNORE INTO Users VALUES ('','"+N+"','"+R+"','"+B+"','"+ShadyController.dateFormat.format(FJ)+"','"+ShadyController.dateFormat.format(LJ)+"','"+c+"')");
+            Bukkit.broadcastMessage("SQL");
+            st.execute("INSERT IGNORE INTO Users VALUES ('','"+N+"','"+R+"','"+B+"','"+ShadyController.dateFormat.format(FJ)+"','"+ShadyController.dateFormat.format(LJ)+"','"+c+"')");
+            
     } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -157,15 +158,15 @@ public class DB {
     public static void setPlayerBanned(SPlayer s,boolean b){
     try {
             Statement st = con.createStatement();
-            st.executeQuery("UPDATE Users SET Banned="+Boolean.toString(b)+" WHERE Name="+s.getName());
+            st.execute("UPDATE Users SET Banned="+Boolean.toString(b)+" WHERE Name="+s.getName());
     } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void setPlayerLatestJoin(SPlayer s,Date d){
+    public static void setPlayerLatestJoin(String PName,Date d){
     try {
             Statement st = con.createStatement();
-            st.executeQuery("UPDATE Users SET LatestJoin="+ShadyController.dateFormat.format(d)+" WHERE Name="+s.getName());
+            st.execute("UPDATE Users SET LatestJoin="+ShadyController.dateFormat.format(d)+" WHERE Name="+PName);
     } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }

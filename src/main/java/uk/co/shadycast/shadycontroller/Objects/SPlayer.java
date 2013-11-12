@@ -27,6 +27,6 @@ public class SPlayer {
     
     public void setRank(String r){this.Rank = r;DB.setPlayerRank(this, Rank);}
     public void setBanned(boolean b){this.Banned = b;DB.setPlayerBanned(this, Banned);}
-    public void setLatestJoin(Date d){this.LatestJoin = d; DB.setPlayerLatestJoin(this, LatestJoin);}
+    public void setLatestJoin(Date d){this.LatestJoin = d; DB.setPlayerLatestJoin(getName(), LatestJoin);}
     public void addCoins(int c){DB.addPlayerCoins(this, c);DB.getPlayerCoins(this);}
 }
