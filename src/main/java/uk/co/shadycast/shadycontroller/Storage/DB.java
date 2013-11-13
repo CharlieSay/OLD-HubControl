@@ -17,6 +17,7 @@ import uk.co.shadycast.shadycontroller.Objects.SPlayer;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
 import uk.co.shadycast.shadycontroller.ShadyController;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
+import uk.co.shadycast.shadycontroller.Utils.Utils;
 
 
 public class DB {
@@ -65,14 +66,14 @@ public class DB {
             Statement st = con.createStatement();
             ResultSet r = st.executeQuery("SELECT * FROM Servers");
             while(r.next()){
-                int id = r.getObject("id", Integer.class);
-                String Type = r.getObject("Type", String.class);
-                String Name = r.getObject("Name", String.class);
-                String Status = r.getObject("Status", String.class);
-                int CurPlayers = r.getObject("CurPlayers", Integer.class);
-                int MaxPlayers = r.getObject("MaxPlayers", Integer.class);
-                String Bungeeid = r.getObject("BungeeID", String.class);
-                int Port = r.getObject("Port", Integer.class);
+                int id = r.getInt(1);
+                String Type = r.getString(2);
+                String Name = r.getString(3);
+                String Status = r.getString(4);
+                int CurPlayers = r.getInt(5);
+                int MaxPlayers = r.getInt(6);
+                String Bungeeid = r.getString(7);
+                int Port = r.getInt(8);
                 SServer ss = new SServer(id,Type,Name,Status,CurPlayers,MaxPlayers,Bungeeid,Port);
                 s.add(ss);
             }
@@ -112,8 +113,8 @@ public class DB {
         String ID = null;
         try {
             Statement st = con.createStatement();
-            ResultSet r = st.executeQuery("SELECT BungeeID FROM Servers WHERE Port='" + port+"'");
-            ID = r.getObject("BungeeID", String.class);
+            ResultSet r = st.executeQuery("SELECT * FROM Servers WHERE Port=" + Integer.toString(port));
+            ID = r.getString("BungeeID");
         }catch(SQLException ex) {
             Msg.Console("[SQL ERROR] " + ChatColor.RED + ex);
         } 
@@ -124,13 +125,15 @@ public class DB {
         SPlayer sp = null;
         try {
             Statement st = con.createStatement();
-            ResultSet r = st.executeQuery("SELECT * FROM Users WHERE Name =" + p.getName());
-            String Rank = r.getObject("Rank", String.class);
-            boolean Banned = r.getObject("Banned", Boolean.class);
-            Date FJ = r.getObject("FirstJoin", Date.class);
-            Date LJ = r.getObject("LatestJoin", Date.class);
-            int c = r.getObject("Coins", Integer.class);
-            sp = new SPlayer(p.getName(),Rank,Banned,FJ,LJ,c);
+            ResultSet r = st.executeQuery("SELECT * FROM Users WHERE Name = '" + p.getName()+"'");
+            if(r.next()){
+            String Rank = r.getString(3);
+            int Banned = r.getInt(4);
+            Date FJ = r.getDate(5);
+            Date LJ = r.getDate(6);
+            int c = r.getInt(7);
+            sp = new SPlayer(p.getName(),Rank,Utils.sqlToJava(Banned),FJ,LJ,c);
+            }
         }catch(SQLException ex) {
             Msg.Console("[SQL ERROR] " + ChatColor.RED + ex);
         }
@@ -148,9 +151,13 @@ public class DB {
     public static void addShadyPlayer(String N,String R,boolean B,Date FJ,Date LJ,int c){
         try {
             Statement st = con.createStatement();
-            Bukkit.broadcastMessage("SQL");
-            st.execute("INSERT IGNORE INTO Users VALUES ('','"+N+"','"+R+"','"+B+"','"+ShadyController.dateFormat.format(FJ)+"','"+ShadyController.dateFormat.format(LJ)+"','"+c+"')");
+            Statement st2 = con.createStatement();
             
+            ResultSet rs = st2.executeQuery("SELECT * FROM Users WHERE Name = '" +N+"'");
+            if(!rs.next()){
+            Msg.All("Welcome "+N+" to the server for the first time everyone!");
+            st.execute("INSERT INTO Users (Name,Rank,Banned,FirstJoin,LatestJoin,Coins) VALUES ('"+N+"','"+R+"','"+Utils.javaToSql(B)+"','"+ShadyController.dateFormat.format(FJ)+"','"+ShadyController.dateFormat.format(LJ)+"','"+c+"')");
+            }else{}
     } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -166,7 +173,7 @@ public class DB {
     public static void setPlayerLatestJoin(String PName,Date d){
     try {
             Statement st = con.createStatement();
-            st.execute("UPDATE Users SET LatestJoin="+ShadyController.dateFormat.format(d)+" WHERE Name="+PName);
+            st.execute("UPDATE Users SET LatestJoin='"+ShadyController.dateFormat.format(d)+"' WHERE Name='"+PName+"'");
     } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }

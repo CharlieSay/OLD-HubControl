@@ -1,6 +1,7 @@
 package uk.co.shadycast.shadycontroller.Events;
 
 import java.util.Date;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,29 +17,19 @@ public class JoinLeave implements Listener{
     
     @EventHandler
     public void Join(PlayerJoinEvent evt){
-        //SServer s = ShadyController.getThisServer();
-        //int ps = s.getCurPlayers();
-        //int cp = ps++;
-        //s.setCurPlayers(cp);
-        
         Player p = evt.getPlayer();
         Date d = new Date();
-        
+        SPlayer sp;
         DB.addShadyPlayer(p.getName(), "Player", false, d, d, 0);
-        SPlayer sp = DB.getShadyPlayer(evt.getPlayer());
+        sp = DB.getShadyPlayer(evt.getPlayer());
         ShadyController.Players.put(p.getName(), sp);
+        DB.setPlayerLatestJoin(sp.getName(), d);
     }
     
     @EventHandler
     public void Leave(PlayerQuitEvent evt){
         Player p = evt.getPlayer();
-        Date d = new Date();
         SPlayer sp = ShadyController.getPlayer(p);
-        DB.setPlayerLatestJoin(sp.getName(), d);
-        ShadyController.Players.remove(sp.getName());
-        //SServer s = ShadyController.getThisServer();
-        //int ps = s.getCurPlayers();
-        //int cp = ps--;
-       // s.setCurPlayers(cp);
+            if(ShadyController.Players.containsKey(sp.getName()))ShadyController.Players.remove(sp.getName());
     } 
 }

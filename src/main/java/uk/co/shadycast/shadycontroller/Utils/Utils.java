@@ -22,4 +22,31 @@ public class Utils {
         }
         p.sendPluginMessage(pluginUtils.getPlugin(), "BungeeCord", b.toByteArray());
     }
+    public static boolean isInt(String str) {
+    try {
+        Integer.parseInt(str);
+        return true;
+    } catch (NumberFormatException e) {
+        return false;
+    }
+    }
+        public static boolean sqlToJava(int i){
+            boolean b = false;
+            if(i == 0){
+                b = false;
+            }else if(i == 1){
+                b = true;
+            }
+            return b;
+        }
+        public static int javaToSql(boolean b){
+            int i = 0;
+            if(b){
+                i = 1;
+            }else if(!b){
+                i = 0;
+            }
+            return i;
+        }
+    
 }

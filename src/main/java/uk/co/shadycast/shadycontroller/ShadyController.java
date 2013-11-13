@@ -2,6 +2,7 @@ package uk.co.shadycast.shadycontroller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +18,7 @@ public class ShadyController extends JavaPlugin {
     public static HashMap<String,SPlayer> Players;
     public static String BungeeID;
     public static DateFormat dateFormat ;
+    
     @Override
     public void onDisable(){
         
@@ -28,10 +30,14 @@ public class ShadyController extends JavaPlugin {
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         DB.init();
         Servers = new HashMap<String,SServer>();
+        ArrayList<SServer> S = new ArrayList<SServer>(DB.getAllServers());
+        for(SServer s: S){
+            Servers.put(s.getBungeeID(), s);
+        }
         Players = new HashMap<String,SPlayer>();
         getServer().getPluginManager().registerEvents(new JoinLeave(), this);
         int port = getServer().getPort();
-        //BungeeID = DB.getBungeeID(port);
+        BungeeID = DB.getBungeeID(port);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         
     }
