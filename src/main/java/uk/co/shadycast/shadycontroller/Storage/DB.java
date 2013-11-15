@@ -10,7 +10,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
@@ -145,11 +144,42 @@ public class DB {
                 Date LJ = r.getDate(6);
                 int c = r.getInt(7);
                 sp = new SPlayer(p.getName(), Rank, Utils.sqlToJava(Banned), FJ, LJ, c);
+
             }
         } catch (SQLException ex) {
             Msg.Console("[SQL ERROR] " + ChatColor.RED + ex);
         }
         return sp;
+    }
+
+    public static boolean checkBan(Player p) {
+        boolean b = false;
+        Date d = new Date();
+        try {
+            Statement st1 = con.createStatement();
+            ResultSet r1 = st1.executeQuery("SELECT * FROM Bans WHERE Name = '" + p.getName() + "'");
+            if(!r1.wasNull()){
+                if (r1.next()) {
+                    Date fin = r1.getDate(6);
+                    if (fin.after(d)) {
+                        Statement st2 = con.createStatement();
+                        st2.executeUpdate("DELETE FROM Bans WHERE Name = '" + p.getName() + "'");
+                        b = false;
+                    } else {
+                        String reas = r1.getString("Reason");
+                        p.kickPlayer("Banned until " + fin + " Reason: " + reas);
+                        b = true;
+                    }
+                }
+            }else{
+                b = false;
+            }
+        } catch (SQLException ex) {
+        }
+    return b;
+    }
+
+    public static void newBan(SPlayer sp) {
     }
 
     public static void setPlayerRank(SPlayer s, String r) {
@@ -240,12 +270,40 @@ public class DB {
         return stats;
     }
 
-    public static void setGameStats(SPlayer s, String game,String stats) {
+    public static void setGameStats(SPlayer s, String game, String stats) {
         try {
             Statement st = con.createStatement();
-            st.execute("UPDATE Users SET "+game+"='" + stats + "' WHERE Name='" + s.getName() + "'");
+            st.execute("UPDATE Users SET " + game + "='" + stats + "' WHERE Name='" + s.getName() + "'");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static int getRankPower(String rank) {
+        int p = 0;
+        try {
+            Statement st = con.createStatement();
+            ResultSet r = st.executeQuery("SELECT * Ranks WHERE Rank=" + rank);
+            if(r.next()){
+                p = r.getInt("RankPower");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return p;
+    }
+    
+    public static int getJoinPower(String rank) {
+        int p = 0;
+        try {
+            Statement st = con.createStatement();
+            ResultSet r = st.executeQuery("SELECT * Ranks WHERE Rank=" + rank);
+            if(r.next()){
+                p = r.getInt("JoinPower");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return p;
     }
 }
