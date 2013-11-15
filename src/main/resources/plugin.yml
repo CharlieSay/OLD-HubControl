@@ -1,3 +1,6 @@
 main: uk.co.shadycast.shadycontroller.ShadyController
 name: Shady Controller
 version: 1.0
+commands:
+  Ban:
+  Rank:

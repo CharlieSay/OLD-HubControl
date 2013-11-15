@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
 import java.util.HashMap;
 import java.util.List;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import uk.co.shadycast.shadycontroller.Commands.Ban;
+import uk.co.shadycast.shadycontroller.Commands.Rank;
 import uk.co.shadycast.shadycontroller.Events.Chat;
 import uk.co.shadycast.shadycontroller.Events.JoinLeave;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
@@ -22,7 +23,7 @@ public class ShadyController extends JavaPlugin {
     public static HashMap<String, SPlayer> Players;
     public static String thisBungeeID;
     public static DateFormat dateFormat;
-
+    public static DateFormat banDateFormat;
     @Override
     public void onDisable() {
     }
@@ -31,6 +32,7 @@ public class ShadyController extends JavaPlugin {
     public void onEnable() {
         //If empty config stop load
         pluginUtils.setPlugin(this);
+        banDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         DB.init();
         Servers = new HashMap<String, SServer>();
@@ -45,6 +47,8 @@ public class ShadyController extends JavaPlugin {
         thisBungeeID = DB.getBungeeID(port);
         Msg.Console("This Server = " + thisBungeeID);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        getCommand("Ban").setExecutor(new Ban());
+        getCommand("Rank").setExecutor(new Rank());
     }
 
     /**
