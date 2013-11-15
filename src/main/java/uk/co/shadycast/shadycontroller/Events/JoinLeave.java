@@ -24,6 +24,7 @@ public class JoinLeave implements Listener{
         sp = DB.getShadyPlayer(evt.getPlayer());
         ShadyController.Players.put(p.getName(), sp);
         DB.setPlayerLatestJoin(sp.getName(), d);
+        DB.increaseCurPlayers(ShadyController.getThisServer(), 1);
     }
     
     @EventHandler
@@ -31,5 +32,6 @@ public class JoinLeave implements Listener{
         Player p = evt.getPlayer();
         SPlayer sp = ShadyController.getPlayer(p);
             if(ShadyController.Players.containsKey(sp.getName()))ShadyController.Players.remove(sp.getName());
+         ShadyController.getThisServer().decreaseCurPlayers(1);
     } 
 }

@@ -3,7 +3,6 @@ package uk.co.shadycast.shadycontroller.Objects;
 import uk.co.shadycast.shadycontroller.Storage.DB;
 
 public class SServer {
-    int id;
     String Type;
     String Name;
     String Status;
@@ -12,12 +11,11 @@ public class SServer {
     String BungeeID;
     int Port;
     
-    public SServer(int i,String Ty,String Na,String St,int CP,int MP,String BI,int P)
-    {this.id = i;this.Type = Ty;this.Name = Na;
+    public SServer(String Ty,String Na,String St,int CP,int MP,String BI,int P)
+    {;this.Type = Ty;this.Name = Na;
      this.Status = St;this.CurPlayers = CP;
      this.MaxPlayers = MP;this.BungeeID =BI;this.Port = P;}
     
-    public int getID(){return this.id;}
     public String getType(){return this.Type;}
     public String getName(){return this.Name;}
     public String getStatus(){return this.Status;}
@@ -34,7 +32,8 @@ public class SServer {
      this.Port = P;
     }
     public void setStatus(String s){this.Status = s;DB.updateStatus(this, Status);}
-    public void setCurPlayers(int cp){this.CurPlayers = cp;DB.updateCurPlayers(this, CurPlayers);}
+    public void increaseCurPlayers(int cp){this.CurPlayers = this.CurPlayers + cp;DB.increaseCurPlayers(this, cp);}
+    public void decreaseCurPlayers(int cp){this.CurPlayers = this.CurPlayers - cp;DB.decreaseCurPlayers(this, cp);}
     public void setMaxPlayers(int mp){this.MaxPlayers = mp;DB.updateMaxPlayers(this, MaxPlayers);}
     
 }
