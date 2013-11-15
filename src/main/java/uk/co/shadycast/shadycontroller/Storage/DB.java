@@ -158,12 +158,14 @@ public class DB {
         try {
             Statement st1 = con.createStatement();
             ResultSet r1 = st1.executeQuery("SELECT * FROM Bans WHERE Name = '" + p.getName() + "'");
-            if(!r1.wasNull()){
+            if (!r1.wasNull()) {
                 if (r1.next()) {
                     Date fin = r1.getDate(6);
                     if (fin.after(d)) {
                         Statement st2 = con.createStatement();
                         st2.executeUpdate("DELETE FROM Bans WHERE Name = '" + p.getName() + "'");
+                        Statement st3 = con.createStatement();
+                        st3.executeQuery("UPDATE Users SET Banned='"+Utils.javaToSql(false)+"' WHERE Name='"+p.getName()+"'");
                         b = false;
                     } else {
                         String reas = r1.getString("Reason");
@@ -171,15 +173,31 @@ public class DB {
                         b = true;
                     }
                 }
-            }else{
+            } else {
                 b = false;
             }
         } catch (SQLException ex) {
         }
-    return b;
+        return b;
     }
 
-    public static void newBan(SPlayer sp) {
+    public static void newBan(String Name, String Banner, String Reason, Date StartDate, Date EndDate) {
+        try {
+            Statement st = con.createStatement();
+            st.executeUpdate("INSERT INTO Bans (Name,Banner,Reason,StartDate,EndDate) "
+                    + "VALUES ('" + Name + "','" + Banner + "','" + Reason + "','"
+                    + ShadyController.banDateFormat.format(StartDate) + "','"
+                    + ShadyController.banDateFormat.format(EndDate) + "')");
+            Statement st2 = con.createStatement();
+            st2.executeUpdate("INSERT INTO OldBans (Name,Banner,Reason,StartDate,EndDate) "
+                    + "VALUES ('" + Name + "','" + Banner + "','" + Reason + "','"
+                    + ShadyController.banDateFormat.format(StartDate) + "','"
+                    + ShadyController.banDateFormat.format(EndDate) + "')");
+            Statement st3 = con.createStatement();
+            st3.executeUpdate("UPDATE Users Banned='"+Utils.javaToSql(true)+"' WHERE Name='"+Name+"'");
+        } catch (SQLException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public static void setPlayerRank(SPlayer s, String r) {
@@ -278,13 +296,13 @@ public class DB {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static int getRankPower(String rank) {
         int p = 0;
         try {
             Statement st = con.createStatement();
             ResultSet r = st.executeQuery("SELECT * Ranks WHERE Rank=" + rank);
-            if(r.next()){
+            if (r.next()) {
                 p = r.getInt("RankPower");
             }
         } catch (SQLException ex) {
@@ -292,13 +310,13 @@ public class DB {
         }
         return p;
     }
-    
+
     public static int getJoinPower(String rank) {
         int p = 0;
         try {
             Statement st = con.createStatement();
             ResultSet r = st.executeQuery("SELECT * Ranks WHERE Rank=" + rank);
-            if(r.next()){
+            if (r.next()) {
                 p = r.getInt("JoinPower");
             }
         } catch (SQLException ex) {
