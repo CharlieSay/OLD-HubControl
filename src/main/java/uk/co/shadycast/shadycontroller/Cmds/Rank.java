@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Commands;
+package uk.co.shadycast.shadycontroller.Cmds;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

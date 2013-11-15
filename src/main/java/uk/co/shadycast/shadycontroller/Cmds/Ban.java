@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Commands;
+package uk.co.shadycast.shadycontroller.Cmds;
 
 import java.util.Calendar;
 import java.util.Date;
