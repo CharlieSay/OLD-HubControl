@@ -18,6 +18,7 @@ public class JoinLeave implements Listener{
     @EventHandler
     public void Join(PlayerJoinEvent evt){
         Player p = evt.getPlayer();
+        if(DB.checkBan(p)){//DB Ban deals with it}else{
         Date d = new Date();
         SPlayer sp;
         DB.addShadyPlayer(p.getName(), "Player", false, d, d, 0);
@@ -25,6 +26,7 @@ public class JoinLeave implements Listener{
         ShadyController.Players.put(p.getName(), sp);
         DB.setPlayerLatestJoin(sp.getName(), d);
         DB.increaseCurPlayers(ShadyController.getThisServer(), 1);
+        }
     }
     
     @EventHandler
