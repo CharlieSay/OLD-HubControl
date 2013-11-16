@@ -17,7 +17,6 @@ public class Rank implements CommandExecutor{
     Player p = (Player) sender;
     SPlayer sp = ShadyController.getPlayer(p);
     // /Rank <User> <Rank>
-    Msg.All(sp.getRank());
     if(DB.getRankPower(sp.getRank()) >= 8){
         if (cmd.getLabel().equalsIgnoreCase("Rank")) {
             if(args.length == 2 ){
@@ -30,7 +29,7 @@ public class Rank implements CommandExecutor{
             }
         }
     }else{
-        Msg.Player("You don't have perms to do that!", p);
+        Msg.Player("Your Rank : " + sp.getRank(), p);
     }
     return false;
     }
