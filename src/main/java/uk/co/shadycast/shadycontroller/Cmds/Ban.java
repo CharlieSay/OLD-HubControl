@@ -23,9 +23,11 @@ public class Ban implements CommandExecutor {
                 if (args.length == 3) {
                     if (Bukkit.getPlayer(args[0].toString()).isOnline()) {
                         Player bp = Bukkit.getPlayer(args[0].toString());
-                        SPlayer bsp = ShadyController.getPlayer(p);
-                        if (Utils.isInt(args[3].toString())) {
-                            int length = Integer.parseInt(args[3]);
+                        SPlayer bsp = ShadyController.getPlayer(bp);
+                        if (Utils.isInt(args[2].toString())) {
+                            int length = Integer.parseInt(args[2]);
+                            Msg.All(DB.getRankPower(sp.getRank())+"");
+                            Msg.All(DB.getRankPower(bsp.getRank())+"");
                             if (DB.getRankPower(sp.getRank()) > DB.getRankPower(bsp.getRank())) {
                                 String Reason = args[2].toString();
                                 Date BF = new Date();
