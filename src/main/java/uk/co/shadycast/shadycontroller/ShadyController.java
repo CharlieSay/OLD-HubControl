@@ -9,6 +9,9 @@ import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import uk.co.shadycast.shadycontroller.Cmds.Ban;
+import uk.co.shadycast.shadycontroller.Cmds.CmdStopAll;
+import uk.co.shadycast.shadycontroller.Cmds.Gamemode;
+import uk.co.shadycast.shadycontroller.Cmds.Kick;
 import uk.co.shadycast.shadycontroller.Cmds.Rank;
 import uk.co.shadycast.shadycontroller.Events.Chat;
 import uk.co.shadycast.shadycontroller.Events.JoinLeave;
@@ -47,8 +50,21 @@ public class ShadyController extends JavaPlugin {
         thisBungeeID = DB.getBungeeID(port);
         Msg.Console("This Server = " + thisBungeeID);
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        //Our Cmds
         getCommand("Ban").setExecutor(new Ban());
         getCommand("Rank").setExecutor(new Rank());
+        getCommand("Gamemode").setExecutor(new Gamemode());
+        getCommand("Kick").setExecutor(new Kick());
+        //Override
+        getCommand("?").setExecutor(new CmdStopAll());
+        getCommand("help").setExecutor(new CmdStopAll());
+        getCommand("me").setExecutor(new CmdStopAll());
+        getCommand("pl").setExecutor(new CmdStopAll());
+        getCommand("plugin").setExecutor(new CmdStopAll());
+        getCommand("plugins").setExecutor(new CmdStopAll());
+        getCommand("stop").setExecutor(new CmdStopAll());
+        getCommand("reload").setExecutor(new CmdStopAll());
+        getCommand("rl").setExecutor(new CmdStopAll());
     }
 
     /**

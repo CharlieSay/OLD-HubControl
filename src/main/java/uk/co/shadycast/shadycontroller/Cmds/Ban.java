@@ -18,8 +18,8 @@ public class Ban implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         Player p = (Player) sender;
         SPlayer sp = ShadyController.getPlayer(p);
-        if (DB.getRankPower(sp.getRank()) >= 7) {
-            if (cmd.getLabel().equalsIgnoreCase("Ban")) {
+         if (cmd.getLabel().equalsIgnoreCase("Ban")) {
+           if (DB.getRankPower(sp.getRank()) >= 7) {
                 if (args.length == 3) {
                     if (Bukkit.getPlayer(args[0].toString()).isOnline()) {
                         Player bp = Bukkit.getPlayer(args[0].toString());
@@ -45,10 +45,10 @@ public class Ban implements CommandExecutor {
                     } else {
                         Msg.Player("That Player Isn't Online!", p);
                     }
-                } else {
+                } 
+            } else {
                     Msg.Player("Correct Usage = /Ban <Player> <Reason> <Days>", p);
                 }
-            }
         }
         return false;
     }
