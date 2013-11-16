@@ -139,11 +139,10 @@ public class DB {
             ResultSet r = st.executeQuery("SELECT * FROM Users WHERE Name = '" + p.getName() + "'");
             if (r.next()) {
                 String Rank = r.getString(3);
-                int Banned = r.getInt(4);
                 Date FJ = r.getDate(5);
                 Date LJ = r.getDate(6);
                 int c = r.getInt(7);
-                sp = new SPlayer(p.getName(), Rank, Utils.sqlToJava(Banned), FJ, LJ, c);
+                sp = new SPlayer(p.getName(), Rank, FJ, LJ, c);
 
             }
         } catch (SQLException ex) {
@@ -155,21 +154,22 @@ public class DB {
     public static boolean checkBan(Player p) {
         boolean b = false;
         Date d = new Date();
+        String reas = null;
+        Date fin = null;
         try {
             Statement st1 = con.createStatement();
             ResultSet r1 = st1.executeQuery("SELECT * FROM Bans WHERE Name = '" + p.getName() + "'");
             if (!r1.wasNull()) {
                 if (r1.next()) {
-                    Date fin = r1.getDate(6);
-                    if (fin.after(d)) {
+                    fin = r1.getDate(6);
+                    if (fin.before(d)) {
                         Statement st2 = con.createStatement();
                         st2.executeUpdate("DELETE FROM Bans WHERE Name = '" + p.getName() + "'");
                         Statement st3 = con.createStatement();
                         st3.executeQuery("UPDATE Users SET Banned='"+Utils.javaToSql(false)+"' WHERE Name='"+p.getName()+"'");
                         b = false;
                     } else {
-                        String reas = r1.getString("Reason");
-                        p.kickPlayer("Banned until " + fin + " Reason: " + reas);
+                        reas = r1.getString("Reason");
                         b = true;
                     }
                 }
@@ -178,6 +178,7 @@ public class DB {
             }
         } catch (SQLException ex) {
         }
+        if(b){p.kickPlayer("Banned until " + fin + " Reason: " + reas);}
         return b;
     }
 
@@ -193,8 +194,6 @@ public class DB {
                     + "VALUES ('" + Name + "','" + Banner + "','" + Reason + "','"
                     + ShadyController.banDateFormat.format(StartDate) + "','"
                     + ShadyController.banDateFormat.format(EndDate) + "')");
-            Statement st3 = con.createStatement();
-            st3.executeUpdate("UPDATE Users Banned='"+Utils.javaToSql(true)+"' WHERE Name='"+Name+"'");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -203,13 +202,13 @@ public class DB {
     public static void setPlayerRank(SPlayer s, String r) {
         try {
             Statement st = con.createStatement();
-            st.execute("UPDATE Users SET Rank=" + r + " WHERE Name=" + s.getName());
+            st.execute("UPDATE Users SET Rank='" + r + "' WHERE Name='" + s.getName()+"'");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static void addShadyPlayer(String N, String R, boolean B, Date FJ, Date LJ, int c) {
+    public static void addShadyPlayer(String N, String R, Date FJ, Date LJ, int c) {
         try {
             Statement st = con.createStatement();
             Statement st2 = con.createStatement();
@@ -217,7 +216,7 @@ public class DB {
             ResultSet rs = st2.executeQuery("SELECT * FROM Users WHERE Name = '" + N + "'");
             if (!rs.next()) {
                 Msg.All("Welcome " + N + " to the server for the first time everyone!");
-                st.execute("INSERT INTO Users (Name,Rank,Banned,FirstJoin,LatestJoin,Coins) VALUES ('" + N + "','" + R + "','" + Utils.javaToSql(B) + "','" + ShadyController.dateFormat.format(FJ) + "','" + ShadyController.dateFormat.format(LJ) + "','" + c + "')");
+                st.execute("INSERT INTO Users (Name,Rank,FirstJoin,LatestJoin,Coins) VALUES ('" + N + "','" + R + "','" + ShadyController.dateFormat.format(FJ) + "','" + ShadyController.dateFormat.format(LJ) + "','" + c + "')");
             } else {
             }
         } catch (SQLException ex) {
