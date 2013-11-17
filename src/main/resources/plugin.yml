@@ -4,3 +4,14 @@ version: 1.0
 commands:
   Ban:
   Rank:
+  Gamemode:
+  Kick:
+  ?:
+  help:
+  me:
+  pl:
+  plugin:
+  plugins:
+  stop:
+  reload:
+  rl:
