@@ -23,7 +23,7 @@ public class JoinLeave implements Listener{
         sp = DB.getShadyPlayer(evt.getPlayer());
         ShadyController.Players.put(p.getName(), sp);
         DB.setPlayerLatestJoin(sp.getName(), d);
-        DB.increaseCurPlayers(ShadyController.getThisServer(), 1);
+        DB.updateCurPlayers(ShadyController.getThisServer());
         }
     }
     
