@@ -10,8 +10,4 @@ commands:
   help:
   me:
   pl:
-  plugin:
   plugins:
-  stop:
-  reload:
-  rl:

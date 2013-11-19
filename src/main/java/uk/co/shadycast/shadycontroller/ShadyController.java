@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
 import java.util.HashMap;
 import java.util.List;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import uk.co.shadycast.shadycontroller.Cmds.Ban;
@@ -15,7 +16,10 @@ import uk.co.shadycast.shadycontroller.Cmds.Kick;
 import uk.co.shadycast.shadycontroller.Cmds.Rank;
 import uk.co.shadycast.shadycontroller.Events.Chat;
 import uk.co.shadycast.shadycontroller.Events.JoinLeave;
+import uk.co.shadycast.shadycontroller.Events.SignCreate;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
+import uk.co.shadycast.shadycontroller.Objects.SSign;
+import uk.co.shadycast.shadycontroller.Storage.Config;
 import uk.co.shadycast.shadycontroller.Storage.DB;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
 import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
@@ -24,9 +28,12 @@ public class ShadyController extends JavaPlugin {
 
     public static HashMap<String, SServer> Servers;
     public static HashMap<String, SPlayer> Players;
+    public static HashMap<Location, SSign> Signs;
     public static String thisBungeeID;
     public static DateFormat dateFormat;
     public static DateFormat banDateFormat;
+    public static boolean signsActive;
+
     @Override
     public void onDisable() {
     }
@@ -35,6 +42,7 @@ public class ShadyController extends JavaPlugin {
     public void onEnable() {
         //If empty config stop load
         pluginUtils.setPlugin(this);
+        this.saveDefaultConfig();
         banDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         DB.init();
@@ -44,8 +52,16 @@ public class ShadyController extends JavaPlugin {
             Servers.put(s.getBungeeID(), s);
         }
         Players = new HashMap<String, SPlayer>();
+        if (pluginUtils.getConfig().isSet("ShadyController.Signs")) {
+            Signs = new HashMap<Location, SSign>(Config.importSigns());
+            Msg.Console("Importing Signs");
+            signsActive = true;
+        } else {
+            signsActive = false;
+        }
         getServer().getPluginManager().registerEvents(new JoinLeave(), this);
         getServer().getPluginManager().registerEvents(new Chat(), this);
+        getServer().getPluginManager().registerEvents(new SignCreate(), this);
         int port = getServer().getPort();
         thisBungeeID = DB.getBungeeID(port);
         Msg.Console("This Server = " + thisBungeeID);
@@ -59,12 +75,25 @@ public class ShadyController extends JavaPlugin {
         getCommand("?").setExecutor(new CmdStopAll());
         getCommand("help").setExecutor(new CmdStopAll());
         getCommand("me").setExecutor(new CmdStopAll());
-        getCommand("pl").setExecutor(new CmdStopAll());
-        getCommand("plugin").setExecutor(new CmdStopAll());
-        getCommand("plugins").setExecutor(new CmdStopAll());
-        getCommand("stop").setExecutor(new CmdStopAll());
-        getCommand("reload").setExecutor(new CmdStopAll());
-        getCommand("rl").setExecutor(new CmdStopAll());
+        //getCommand("pl").setExecutor(new CmdStopAll());
+        //TODO Fix getCommand("plugins").setExecutor(new CmdStopAll());
+        // Msg.All(Boolean.toString(DB.serverExsists(thisBungeeID)));
+        // Msg.All(Boolean.toString(DB.serverExsists("asd")));
+        if (signsActive) {
+            Msg.Console("Starting Sign Loop");
+            signLoop();
+        }
+    }
+
+    public void signLoop() {
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            public void run() {
+                for (SSign s : Signs.values()) {
+                    DB.updateServer(s.getSServer());
+                    s.updateSign();
+                }
+            }
+        }, 0L, 100L);
     }
 
     /**
@@ -118,26 +147,13 @@ public class ShadyController extends JavaPlugin {
     public static void updateMaxPlayers(String BungeeID, int PlayerCount) {
         DB.updateMaxPlayers(getServer(BungeeID), PlayerCount);
     }
-
-    /**
-     * Increases the specified Shady Servers Current player value
-     *
-     * @param BungeeID The Id of the Bungee server the same as the DB and bungee
-     * config
-     * @param PlayerCount The Value To Increase The Current Players on the
-     * Specified SServer by
-     */
-    private static void increaseCurPlayers(String BungeeID, int PlayerCount) {
-        DB.increaseCurPlayers(getServer(BungeeID), PlayerCount);
-    }
-
     /**
      * Gets the Stats for the specified gamemode from the database
      *
      * @param SPlayer The Player you wish to get stats for
      * @param game The name of the game you want stats for
      */
-    private static void getGameStats(SPlayer SPlayer, String game) {
+    public static void getGameStats(SPlayer SPlayer, String game) {
         DB.getGameStats(SPlayer, game);
     }
 
@@ -148,7 +164,40 @@ public class ShadyController extends JavaPlugin {
      * @param game The name of the game you want to set stats for
      * @param stats The stats you want to set
      */
-    private static void getGameStats(SPlayer SPlayer, String game, String stats) {
+    public static void getGameStats(SPlayer SPlayer, String game, String stats) {
         DB.setGameStats(SPlayer, game, stats);
+    }
+
+    /**
+     * Gets the Join Power for a specified SPlayer
+     *
+     * @param SP The specified SPlayer
+     */
+    public static void getJoinPower(SPlayer SP) {
+        DB.getJoinPower(SP.getRank());
+    }
+
+    /**
+     * Gets the Rank Power for a specified SPlayer
+     *
+     * @param SP The specified SPlayer
+     */
+    public static void getRankPower(SPlayer SP) {
+        DB.getRankPower(SP.getRank());
+    }
+
+    /**
+     * Checks if the specified server is currently loaded in the ShadyController
+     *
+     * @param BungeeID the ID for the server
+     */
+    public static boolean serverExsists(String BungeeID) {
+        boolean b = false;
+        if (Servers.containsKey(BungeeID)) {
+            b = true;
+        } else {
+            b = false;
+        }
+        return b;
     }
 }

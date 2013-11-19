@@ -10,10 +10,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
+import uk.co.shadycast.shadycontroller.Objects.SStatus;
 import uk.co.shadycast.shadycontroller.ShadyController;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
 import uk.co.shadycast.shadycontroller.Utils.Utils;
@@ -45,14 +47,14 @@ public class DB {
             Statement st = con.createStatement();
             ResultSet r = st.executeQuery("SELECT * FROM Servers WHERE BungeeID = '" + ss.getBungeeID() + "'");
             if (r.next()) {
-                String Type = r.getObject("Type", String.class);
-                String Name = r.getObject("Name", String.class);
-                String Status = r.getObject("Status", String.class);
-                int CurPlayers = r.getObject("CurPlayers", Integer.class);
-                int MaxPlayers = r.getObject("MaxPlayers", Integer.class);
-                String Bungeeid = r.getObject("BungeeID", String.class);
-                int Port = r.getObject("Port", Integer.class);
-                s.setAll(Type, Name, Status, CurPlayers, MaxPlayers, Bungeeid, Port);
+                String Type = r.getString("Type");
+                String Name = r.getString("Name");
+                String Status = r.getString("Status");
+                int CurPlayers = r.getInt("CurPlayers");
+                int MaxPlayers = r.getInt("MaxPlayers");
+                String Bungeeid = r.getString("BungeeID");
+                int Port = r.getInt("Port");
+                s.setAll(Type, Name, SStatus.getStatus(Status), CurPlayers, MaxPlayers, Bungeeid, Port);
             }
         } catch (SQLException ex) {
             Msg.Console("[SQL ERROR] " + ChatColor.RED + ex);
@@ -73,7 +75,7 @@ public class DB {
                 int MaxPlayers = r.getInt(6);
                 String Bungeeid = r.getString(7);
                 int Port = r.getInt(8);
-                SServer ss = new SServer(Type, Name, Status, CurPlayers, MaxPlayers, Bungeeid, Port);
+                SServer ss = new SServer(Type, Name, SStatus.getStatus(Status), CurPlayers, MaxPlayers, Bungeeid, Port);
                 s.add(ss);
             }
         } catch (SQLException ex) {
@@ -91,10 +93,11 @@ public class DB {
         }
     }
 
-    public static void increaseCurPlayers(SServer s, int i) {
+    public static void updateCurPlayers(SServer s) {
+        int i = Bukkit.getOnlinePlayers().length;
         try {
             Statement st = con.createStatement();
-            st.executeUpdate("UPDATE Servers SET CurPlayers = CurPlayers + " + i + " WHERE BungeeID= '" + s.getBungeeID() + "'");
+            st.executeUpdate("UPDATE Servers SET CurPlayers = " + i + " WHERE BungeeID= '" + s.getBungeeID() + "'");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -323,4 +326,20 @@ public class DB {
         }
         return p;
     }
+    
+    /*public static boolean serverExsists(String server) {
+     * boolean b = false;
+     * try {
+     * Statement st = con.createStatement();
+     * ResultSet r = st.executeQuery("SELECT * Servers WHERE BungeeID= '" +server+"'");
+     * if (r.next()) {
+     * b = false;
+     * }else{
+     * b = true;
+     * }
+     * } catch (SQLException ex) {
+     * Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+     * }
+     * return b;
+     * }*/
 }

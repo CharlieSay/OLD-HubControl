@@ -17,11 +17,7 @@ public class CmdStopAll implements CommandExecutor {
            cmd.getLabel().equalsIgnoreCase("help") || 
            cmd.getLabel().equalsIgnoreCase("me") || 
            cmd.getLabel().equalsIgnoreCase("pl") || 
-           cmd.getLabel().equalsIgnoreCase("plugin") || 
-           cmd.getLabel().equalsIgnoreCase("plugins") ||
-           cmd.getLabel().equalsIgnoreCase("stop") ||
-           cmd.getLabel().equalsIgnoreCase("reload") ||
-           cmd.getLabel().equalsIgnoreCase("rl")){
+           cmd.getLabel().equalsIgnoreCase("plugins")){
             Msg.Player(ChatColor.RED + "Sorry thats a no no", p);
         }
     return false;
