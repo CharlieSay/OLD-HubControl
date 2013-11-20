@@ -20,7 +20,6 @@ public class SSign {
         this.server = s;        
         this.loc = l;
         this.s = (Sign) l.getBlock().getState();
-        SaveSign();
     }
     
     public SServer getSServer() {
@@ -46,7 +45,7 @@ public class SSign {
         s.update();
     }
 
-    private void SaveSign() {
+    public void SaveSign() {
         FileConfiguration config = pluginUtils.getConfig();
         List<String> ls;
         if (config.isSet("ShadyController.Signs")) {

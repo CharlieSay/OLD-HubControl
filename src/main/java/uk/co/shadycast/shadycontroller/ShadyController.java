@@ -1,5 +1,8 @@
 package uk.co.shadycast.shadycontroller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +10,7 @@ import uk.co.shadycast.shadycontroller.Objects.SServer;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import uk.co.shadycast.shadycontroller.Cmds.Ban;
@@ -16,7 +20,7 @@ import uk.co.shadycast.shadycontroller.Cmds.Kick;
 import uk.co.shadycast.shadycontroller.Cmds.Rank;
 import uk.co.shadycast.shadycontroller.Events.Chat;
 import uk.co.shadycast.shadycontroller.Events.JoinLeave;
-import uk.co.shadycast.shadycontroller.Events.SignCreate;
+import uk.co.shadycast.shadycontroller.Events.SignEvents;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
 import uk.co.shadycast.shadycontroller.Objects.SSign;
 import uk.co.shadycast.shadycontroller.Storage.Config;
@@ -40,18 +44,26 @@ public class ShadyController extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        //If empty config stop load
         pluginUtils.setPlugin(this);
+        Msg.Console("Plugin Set");
+        Msg.Console("InIt");
+        FileConfiguration config = this.getConfig();
+        Msg.Console("Saving Config");
         this.saveDefaultConfig();
+        Msg.Console("InIt Date Format");
         banDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Msg.Console("InIt Database");
         DB.init();
+        Msg.Console("InIt Servers");
         Servers = new HashMap<String, SServer>();
         ArrayList<SServer> S = new ArrayList<SServer>(DB.getAllServers());
         for (SServer s : S) {
             Servers.put(s.getBungeeID(), s);
         }
+        Msg.Console("InIt Players");
         Players = new HashMap<String, SPlayer>();
+        Msg.Console("Config import");
         if (pluginUtils.getConfig().isSet("ShadyController.Signs")) {
             Signs = new HashMap<Location, SSign>(Config.importSigns());
             Msg.Console("Importing Signs");
@@ -59,14 +71,18 @@ public class ShadyController extends JavaPlugin {
         } else {
             signsActive = false;
         }
+        Msg.Console("Register Events");
         getServer().getPluginManager().registerEvents(new JoinLeave(), this);
         getServer().getPluginManager().registerEvents(new Chat(), this);
-        getServer().getPluginManager().registerEvents(new SignCreate(), this);
+        getServer().getPluginManager().registerEvents(new SignEvents(), this);
+        Msg.Console("InIt Servers");
         int port = getServer().getPort();
         thisBungeeID = DB.getBungeeID(port);
         Msg.Console("This Server = " + thisBungeeID);
+        Msg.Console("Outgoing Plugin Channel");
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         //Our Cmds
+        Msg.Console("Register Commands");
         getCommand("Ban").setExecutor(new Ban());
         getCommand("Rank").setExecutor(new Rank());
         getCommand("Gamemode").setExecutor(new Gamemode());
@@ -79,6 +95,7 @@ public class ShadyController extends JavaPlugin {
         //TODO Fix getCommand("plugins").setExecutor(new CmdStopAll());
         // Msg.All(Boolean.toString(DB.serverExsists(thisBungeeID)));
         // Msg.All(Boolean.toString(DB.serverExsists("asd")));
+        Msg.Console("Prep Signs Loop");
         if (signsActive) {
             Msg.Console("Starting Sign Loop");
             signLoop();
@@ -199,5 +216,41 @@ public class ShadyController extends JavaPlugin {
             b = false;
         }
         return b;
+    }
+    /**
+     * Sends a player to the specified SServer
+     *
+     * @param P the Player to send
+     * @param s the Target SServer
+     */
+    public static void sendPlayer(Player p,SServer s) {
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(b);
+        
+        try {
+            out.writeUTF("Connect");
+            out.writeUTF(s.getBungeeID()); 
+        } catch (IOException e) {
+            // Can never happen
+        }
+        p.sendPluginMessage(pluginUtils.getPlugin(), "BungeeCord", b.toByteArray());
+    }
+    /**
+     * Sends a player to the Hub
+     *
+     * @param P the Player to send
+     * @param s the Target SServer
+     */
+    public static void sendPlayerToHub(Player p) {
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        DataOutputStream out = new DataOutputStream(b);
+        
+        try {
+            out.writeUTF("Connect");
+            out.writeUTF("Hub1"); // Change When Multi-hub happens
+        } catch (IOException e) {
+            // Can never happen
+        }
+        p.sendPluginMessage(pluginUtils.getPlugin(), "BungeeCord", b.toByteArray());
     }
 }

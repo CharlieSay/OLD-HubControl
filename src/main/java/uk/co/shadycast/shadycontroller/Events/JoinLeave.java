@@ -31,7 +31,7 @@ public class JoinLeave implements Listener{
     public void Leave(PlayerQuitEvent evt){
         Player p = evt.getPlayer();
         SPlayer sp = ShadyController.getPlayer(p);
-            if(ShadyController.Players.containsKey(sp.getName()))ShadyController.Players.remove(sp.getName());
-         ShadyController.getThisServer().decreaseCurPlayers(1);
+            if(ShadyController.Players.containsKey(sp.getName())){ShadyController.Players.remove(sp.getName());}else{}
+        DB.updateCurPlayers(ShadyController.getThisServer());
     } 
 }
