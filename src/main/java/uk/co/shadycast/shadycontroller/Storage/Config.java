@@ -11,7 +11,8 @@ import uk.co.shadycast.shadycontroller.ShadyController;
 import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
 
 public class Config {
-
+    
+    
     public static HashMap<Location, SSign> importSigns() {
         HashMap<Location, SSign> ss = new HashMap<Location, SSign>();
         FileConfiguration config = pluginUtils.getConfig();

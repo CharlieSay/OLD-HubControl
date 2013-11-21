@@ -37,7 +37,7 @@ public class ShadyController extends JavaPlugin {
     public static DateFormat dateFormat;
     public static DateFormat banDateFormat;
     public static boolean signsActive;
-
+    public static boolean ChatActive = true;
     @Override
     public void onDisable() {
     }
@@ -103,6 +103,7 @@ public class ShadyController extends JavaPlugin {
         //TODO Fix getCommand("plugins").setExecutor(new CmdStopAll());
         // Msg.All(Boolean.toString(DB.serverExsists(thisBungeeID)));
         // Msg.All(Boolean.toString(DB.serverExsists("asd")));
+        ChatActive = config.getBoolean("ShadyController.Chat",true);
         Msg.Console("Prep Signs Loop");
         if (signsActive) {
             Msg.Console("Starting Sign Loop");

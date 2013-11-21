@@ -13,6 +13,7 @@ public class Chat implements Listener{
     
     @EventHandler
     public void onChat(AsyncPlayerChatEvent evt){
+        if(ShadyController.ChatActive){
         Player p = evt.getPlayer();
         SPlayer sp = ShadyController.getPlayer(p);
         String msg = evt.getMessage();
@@ -45,6 +46,7 @@ public class Chat implements Listener{
         }else if(R.equalsIgnoreCase("Player")){
             evt.setFormat(ChatColor.GRAY + p.getName() + ChatColor.WHITE + " : " + ChatColor.GRAY + msg);
         }
+      }
     }
 
 }
