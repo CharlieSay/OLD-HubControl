@@ -85,7 +85,7 @@ public class ShadyController extends JavaPlugin {
         Msg.Console("Register Commands");
         getCommand("Ban").setExecutor(new Ban());
         getCommand("Rank").setExecutor(new Rank());
-        getCommand("Gamemode").setExecutor(new Gamemode());
+        //getCommand("Gamemode").setExecutor(new Gamemode());
         getCommand("Kick").setExecutor(new Kick());
         //Override
         getCommand("?").setExecutor(new CmdStopAll());
