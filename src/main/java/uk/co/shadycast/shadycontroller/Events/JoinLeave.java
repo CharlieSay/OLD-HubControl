@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
+import uk.co.shadycast.shadycontroller.Objects.SStatus;
 import uk.co.shadycast.shadycontroller.ShadyController;
 import uk.co.shadycast.shadycontroller.Storage.DB;
 

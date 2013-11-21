@@ -170,8 +170,8 @@ public class ShadyController extends JavaPlugin {
      * @param SPlayer The Player you wish to get stats for
      * @param game The name of the game you want stats for
      */
-    public static void getGameStats(SPlayer SPlayer, String game) {
-        DB.getGameStats(SPlayer, game);
+    public static String getGameStats(SPlayer SPlayer, String game) {
+        return DB.getGameStats(SPlayer, game);
     }
 
     /**
@@ -181,7 +181,7 @@ public class ShadyController extends JavaPlugin {
      * @param game The name of the game you want to set stats for
      * @param stats The stats you want to set
      */
-    public static void getGameStats(SPlayer SPlayer, String game, String stats) {
+    public static void setGameStats(SPlayer SPlayer, String game, String stats) {
         DB.setGameStats(SPlayer, game, stats);
     }
 
@@ -190,8 +190,8 @@ public class ShadyController extends JavaPlugin {
      *
      * @param SP The specified SPlayer
      */
-    public static void getJoinPower(SPlayer SP) {
-        DB.getJoinPower(SP.getRank());
+    public static int getJoinPower(SPlayer SP) {
+       return DB.getJoinPower(SP.getRank());
     }
 
     /**
@@ -199,8 +199,8 @@ public class ShadyController extends JavaPlugin {
      *
      * @param SP The specified SPlayer
      */
-    public static void getRankPower(SPlayer SP) {
-        DB.getRankPower(SP.getRank());
+    public static int getRankPower(SPlayer SP) {
+        return DB.getRankPower(SP.getRank());
     }
 
     /**
