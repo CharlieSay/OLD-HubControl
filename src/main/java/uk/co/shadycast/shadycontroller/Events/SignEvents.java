@@ -51,8 +51,8 @@ public class SignEvents implements Listener {
 
     @EventHandler
     public void BBreak(BlockBreakEvent evt) {
-        Location l = evt.getBlock().getLocation();
-       if(evt.getBlock() instanceof Sign){
+       if(evt.getBlock().getType() == Material.SIGN || evt.getBlock().getType() == Material.WALL_SIGN || evt.getBlock().getType() == Material.SIGN_POST){
+           Location l = evt.getBlock().getLocation();
         if (ShadyController.Signs.containsKey(l)) {
             FileConfiguration config = pluginUtils.getConfig();
             List<String> ls;
