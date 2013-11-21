@@ -18,22 +18,22 @@ public class Kick implements CommandExecutor {
         SPlayer sp = ShadyController.getPlayer(p);
         if(cmd.getLabel().equalsIgnoreCase("kick")){
             if (DB.getRankPower(sp.getRank()) >= 7) {
-                if(args.length == 2){
+                if(args.length == 1){
                     String kp = args[0];
-                    String r = args[1];
                     if(Bukkit.getPlayer(kp).isOnline()){
-                        SPlayer ksp = ShadyController.getPlayer(p);
+                        SPlayer ksp = ShadyController.getPlayer(Bukkit.getPlayer(kp));
                         if(DB.getRankPower(sp.getRank()) > DB.getRankPower(ksp.getRank())){
-                            Bukkit.getPlayer(kp).kickPlayer(r);
+                            Bukkit.getPlayer(kp).kickPlayer("You where kicked from the server!");
                             //TODO Log Kick
                         }else{
                             Msg.Player("You Don't have permmission to kick that person", p);
+                            Msg.Player("Kicker: "+DB.getRankPower(sp.getRank()) + sp.getRank() + " | Kicked: "+DB.getRankPower(ksp.getRank()) + ksp.getRank(), p);
                         }
                     }else{
                         Msg.Player("That player is not online", p);
                     }
                 }else{
-                  Msg.Player("Correct usage /kick <player> <reason>", p);
+                  Msg.Player("Correct usage /kick <player>", p);
                 }
             }    
          }
