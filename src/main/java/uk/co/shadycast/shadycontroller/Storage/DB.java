@@ -317,7 +317,7 @@ public class DB {
         int p = 0;
         try {
             Statement st = con.createStatement();
-            ResultSet r = st.executeQuery("SELECT * Ranks WHERE Rank=" + rank);
+            ResultSet r = st.executeQuery("SELECT * FROM Ranks WHERE Rank='" + rank+"'");
             if (r.next()) {
                 p = r.getInt("JoinPower");
             }

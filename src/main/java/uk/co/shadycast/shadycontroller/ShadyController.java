@@ -200,6 +200,7 @@ public class ShadyController extends JavaPlugin {
      * @param SP The specified SPlayer
      */
     public static int getJoinPower(SPlayer SP) {
+        Msg.Console(SP.getRank());
        return DB.getJoinPower(SP.getRank());
     }
 
