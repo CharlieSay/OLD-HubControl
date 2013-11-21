@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
 import java.util.HashMap;
 import java.util.List;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import uk.co.shadycast.shadycontroller.Cmds.Ban;
 import uk.co.shadycast.shadycontroller.Cmds.CmdStopAll;
-import uk.co.shadycast.shadycontroller.Cmds.Gamemode;
 import uk.co.shadycast.shadycontroller.Cmds.Kick;
 import uk.co.shadycast.shadycontroller.Cmds.Rank;
 import uk.co.shadycast.shadycontroller.Events.Chat;
@@ -62,7 +62,15 @@ public class ShadyController extends JavaPlugin {
             Servers.put(s.getBungeeID(), s);
         }
         Msg.Console("InIt Players");
+        if(Bukkit.getOnlinePlayers().length > 0){
+            Players = new HashMap<String, SPlayer>();
+            for(Player p : Bukkit.getOnlinePlayers()){
+                SPlayer sp = DB.getShadyPlayer(p);
+                Players.put(sp.getName(), sp);
+            }
+        }else{
         Players = new HashMap<String, SPlayer>();
+        }
         Msg.Console("Config import");
         if (pluginUtils.getConfig().isSet("ShadyController.Signs")) {
             Signs = new HashMap<Location, SSign>(Config.importSigns());
