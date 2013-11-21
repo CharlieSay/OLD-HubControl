@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -51,6 +52,7 @@ public class SignEvents implements Listener {
     @EventHandler
     public void BBreak(BlockBreakEvent evt) {
         Location l = evt.getBlock().getLocation();
+       if(evt.getBlock() instanceof Sign){
         if (ShadyController.Signs.containsKey(l)) {
             FileConfiguration config = pluginUtils.getConfig();
             List<String> ls;
@@ -65,7 +67,7 @@ public class SignEvents implements Listener {
                 Msg.Player("Sign Removed", evt.getPlayer());
             }
         }
-
+       }
     }
 
     @EventHandler
