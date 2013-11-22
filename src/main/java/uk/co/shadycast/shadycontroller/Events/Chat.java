@@ -21,10 +21,10 @@ public class Chat implements Listener{
         String R = sp.getRank();
         if(R.equalsIgnoreCase("Owner")){
             evt.setFormat(ChatColor.WHITE + "["+ChatColor.DARK_RED + ChatColor.BOLD + R + ChatColor.WHITE + "] " 
-                          + ChatColor.DARK_RED + p.getName() + ChatColor.WHITE + " : " + ChatColor.BLUE + msg);
+                          + ChatColor.DARK_RED + p.getName() + ChatColor.WHITE + " : " + ChatColor.WHITE + msg);
         }else if(R.equalsIgnoreCase("Manager")){
             evt.setFormat(ChatColor.WHITE + "["+ChatColor.DARK_RED + ChatColor.BOLD + R + ChatColor.WHITE + "] " 
-                          + ChatColor.DARK_RED + p.getName() + ChatColor.WHITE + " : " + ChatColor.BLUE + msg);
+                          + ChatColor.DARK_RED + p.getName() + ChatColor.WHITE + " : " + ChatColor.WHITE + msg);
         }else if(R.equalsIgnoreCase("Dev")){
             evt.setFormat(ChatColor.WHITE + "["+ChatColor.GREEN + R + ChatColor.WHITE + "] " 
                           + ChatColor.GREEN + p.getName() + ChatColor.WHITE + " : " + ChatColor.DARK_GREEN + msg);
@@ -38,11 +38,11 @@ public class Chat implements Listener{
             evt.setFormat(ChatColor.WHITE + "["+ChatColor.YELLOW + R + ChatColor.WHITE + "] " 
                           + ChatColor.YELLOW + p.getName() + ChatColor.WHITE + " : " + ChatColor.GOLD + msg);
         }else if(R.equalsIgnoreCase("DonatorP")){
-            evt.setFormat(ChatColor.WHITE + "["+ChatColor.AQUA + "Donator +" + ChatColor.WHITE + "] " 
-                          + ChatColor.AQUA + p.getName() + ChatColor.WHITE + " : " + ChatColor.BLUE + msg);
+            evt.setFormat(ChatColor.WHITE + "["+ChatColor.DARK_AQUA + "Donator +" + ChatColor.WHITE + "] " 
+                          + ChatColor.DARK_AQUA + p.getName() + ChatColor.WHITE + " : " + ChatColor.AQUA + msg);
         }else if(R.equalsIgnoreCase("Donator")){
-            evt.setFormat(ChatColor.WHITE + "["+ChatColor.DARK_PURPLE + R + ChatColor.WHITE + "] " 
-                          + ChatColor.DARK_PURPLE + p.getName() + ChatColor.WHITE + " : " + ChatColor.BLUE + msg);
+            evt.setFormat(ChatColor.WHITE + "["+ChatColor.BLUE + R + ChatColor.WHITE + "] " 
+                          + ChatColor.BLUE + p.getName() + ChatColor.WHITE + " : " + ChatColor.AQUA + msg);
         }else if(R.equalsIgnoreCase("Player")){
             evt.setFormat(ChatColor.GRAY + p.getName() + ChatColor.WHITE + " : " + ChatColor.GRAY + msg);
         }

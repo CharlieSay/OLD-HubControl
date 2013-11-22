@@ -71,6 +71,7 @@ public class ShadyController extends JavaPlugin {
         }else{
         Players = new HashMap<String, SPlayer>();
         }
+        SignEvents.cd = new ArrayList<String>();
         Msg.Console("Config import");
         if (pluginUtils.getConfig().isSet("ShadyController.Signs")) {
             Signs = new HashMap<Location, SSign>(Config.importSigns());
@@ -119,7 +120,7 @@ public class ShadyController extends JavaPlugin {
                     s.updateSign();
                 }
             }
-        }, 0L, 100L);
+        }, 0L, 40L);
     }
 
     /**

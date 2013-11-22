@@ -45,10 +45,10 @@ public class Ban implements CommandExecutor {
                     } else {
                         Msg.Player("That Player Isn't Online!", p);
                     }
-                } 
-            } else {
+                } else {
                     Msg.Player("Correct Usage = /Ban <Player> <Reason> <Days>", p);
                 }
+            } 
         }
         return false;
     }

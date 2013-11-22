@@ -1,10 +1,11 @@
 package uk.co.shadycast.shadycontroller.Events;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +16,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
 import uk.co.shadycast.shadycontroller.Objects.SSign;
+import uk.co.shadycast.shadycontroller.Objects.SStatus;
 import uk.co.shadycast.shadycontroller.ShadyController;
 import uk.co.shadycast.shadycontroller.Storage.Config;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
@@ -69,7 +71,7 @@ public class SignEvents implements Listener {
         }
        }
     }
-
+    public static ArrayList<String> cd;
     @EventHandler
     public void Click(PlayerInteractEvent evt) {
         if (ShadyController.signsActive) {
@@ -77,12 +79,33 @@ public class SignEvents implements Listener {
                 if (evt.getClickedBlock().getType().equals(Material.WALL_SIGN) || evt.getClickedBlock().getType().equals(Material.SIGN)  || evt.getClickedBlock().getType() == Material.SIGN_POST) {
                     Location l = evt.getClickedBlock().getLocation();
                     if (ShadyController.Signs.containsKey(l)) {
+                        if(!cd.contains(evt.getPlayer().getName())){
                         Player p = evt.getPlayer();
+                        coolDown(p.getName());
                         SSign s = ShadyController.Signs.get(l);
-                        ShadyController.sendPlayer(p, s.getSServer());
-                    }
+                        if(!s.getSServer().getStatus().equals(SStatus.InGame)){
+                            if(s.getSServer().getStatus().equals(SStatus.Restarting)){
+                            ShadyController.sendPlayer(p, s.getSServer());
+                            }else{
+                               Msg.Player(ChatColor.RED + "Please wait, this server is restarting!", p); 
+                            }
+                        }else{
+                            Msg.Player(ChatColor.RED + "Please wait, this game is in session!", p);
+                        }
+                    }else{
+                            Msg.Spam(evt.getPlayer());
+                        }
+                 }
                 }
             }
         }
+    }
+    public void coolDown(final String s) {
+        cd.add(s);
+        pluginUtils.getServer().getScheduler().runTaskLater(pluginUtils.getPlugin(), new Runnable() {
+            public void run() {
+                cd.remove(s);
+            }
+        }, 40L);
     }
 }
