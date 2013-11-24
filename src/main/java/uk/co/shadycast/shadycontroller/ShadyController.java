@@ -110,6 +110,7 @@ public class ShadyController extends JavaPlugin {
             Msg.Console("Starting Sign Loop");
             signLoop();
         }
+        DB.updateCurPlayers(getThisServer());
     }
 
     public void signLoop() {

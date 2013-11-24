@@ -154,36 +154,36 @@ public class DB {
         return sp;
     }
 
-    public static boolean checkBan(Player p) {
-        boolean b = false;
-        Date d = new Date();
-        String reas = null;
-        Date fin = null;
-        try {
-            Statement st1 = con.createStatement();
-            ResultSet r1 = st1.executeQuery("SELECT * FROM Bans WHERE Name = '" + p.getName() + "'");
-            if (!r1.wasNull()) {
-                if (r1.next()) {
-                    fin = r1.getDate(6);
-                    if (fin.before(d)) {
-                        Statement st2 = con.createStatement();
-                        st2.executeUpdate("DELETE FROM Bans WHERE Name = '" + p.getName() + "'");
-                        Statement st3 = con.createStatement();
-                        st3.executeQuery("UPDATE Users SET Banned='"+Utils.javaToSql(false)+"' WHERE Name='"+p.getName()+"'");
-                        b = false;
-                    } else {
-                        reas = r1.getString("Reason");
-                        b = true;
-                    }
-                }
-            } else {
-                b = false;
-            }
-        } catch (SQLException ex) {
-        }
-        if(b){p.kickPlayer("Banned until " + fin + " Reason: " + reas);}
-        return b;
-    }
+    /*public static boolean checkBan(String p) {
+     * boolean b = false;
+     * Date d = new Date();
+     * String reas = null;
+     * Date fin = null;
+     * try {
+     * Statement st1 = con.createStatement();
+     * ResultSet r1 = st1.executeQuery("SELECT * FROM Bans WHERE Name = '" + p + "'");
+     * if (!r1.wasNull()) {
+     * if (r1.next()) {
+     * fin = r1.getDate(6);
+     * if (fin.before(d)) {
+     * Statement st2 = con.createStatement();
+     * st2.executeUpdate("DELETE FROM Bans WHERE Name = '" + p + "'");
+     * Statement st3 = con.createStatement();
+     * st3.executeQuery("UPDATE Users SET Banned='"+Utils.javaToSql(false)+"' WHERE Name='"+p+"'");
+     * b = false;
+     * } else {
+     * reas = r1.getString("Reason");
+     * b = true;
+     * }
+     * }
+     * } else {
+     * b = false;
+     * }
+     * } catch (SQLException ex) {
+     * }
+     * if(b){p.kickPlayer("Banned until " + fin + " Reason: " + reas);}
+     * return b;
+     * }*/
 
     public static void newBan(String Name, String Banner, String Reason, Date StartDate, Date EndDate) {
         try {

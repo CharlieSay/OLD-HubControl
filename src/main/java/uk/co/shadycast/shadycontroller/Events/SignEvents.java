@@ -55,6 +55,7 @@ public class SignEvents implements Listener {
     public void BBreak(BlockBreakEvent evt) {
        if(evt.getBlock().getType() == Material.SIGN || evt.getBlock().getType() == Material.WALL_SIGN || evt.getBlock().getType() == Material.SIGN_POST){
            Location l = evt.getBlock().getLocation();
+       if(!ShadyController.Signs.isEmpty()){
         if (ShadyController.Signs.containsKey(l)) {
             FileConfiguration config = pluginUtils.getConfig();
             List<String> ls;
@@ -70,6 +71,7 @@ public class SignEvents implements Listener {
             }
         }
        }
+       }
     }
     public static ArrayList<String> cd;
     @EventHandler
@@ -84,7 +86,7 @@ public class SignEvents implements Listener {
                         coolDown(p.getName());
                         SSign s = ShadyController.Signs.get(l);
                         if(!s.getSServer().getStatus().equals(SStatus.InGame)){
-                            if(s.getSServer().getStatus().equals(SStatus.Restarting)){
+                            if(!s.getSServer().getStatus().equals(SStatus.Restarting)){
                             ShadyController.sendPlayer(p, s.getSServer());
                             }else{
                                Msg.Player(ChatColor.RED + "Please wait, this server is restarting!", p); 

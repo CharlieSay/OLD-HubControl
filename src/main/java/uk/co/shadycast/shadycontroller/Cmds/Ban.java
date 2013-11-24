@@ -1,7 +1,9 @@
 package uk.co.shadycast.shadycontroller.Cmds;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,16 +22,18 @@ public class Ban implements CommandExecutor {
         SPlayer sp = ShadyController.getPlayer(p);
          if (cmd.getLabel().equalsIgnoreCase("Ban")) {
            if (DB.getRankPower(sp.getRank()) >= 7) {
-                if (args.length == 3) {
+                if (args.length > 3) {
                     if (Bukkit.getPlayer(args[0].toString()).isOnline()) {
                         Player bp = Bukkit.getPlayer(args[0].toString());
                         SPlayer bsp = ShadyController.getPlayer(bp);
-                        if (Utils.isInt(args[2].toString())) {
-                            int length = Integer.parseInt(args[2]);
-                            Msg.All(DB.getRankPower(sp.getRank())+"");
-                            Msg.All(DB.getRankPower(bsp.getRank())+"");
+                        if (Utils.isInt(args[1].toString())) {
+                            int length = Integer.parseInt(args[1]);
                             if (DB.getRankPower(sp.getRank()) > DB.getRankPower(bsp.getRank())) {
-                                String Reason = args[2].toString();
+                                int rl = args.length - 2;
+                                String Reason = "";
+                                for(int i=2; i<args.length; i++){
+                                  Reason += args[i] + " ";
+                                }
                                 Date BF = new Date();
                                 Date BU = new Date();
                                 Calendar c = Calendar.getInstance();
@@ -46,7 +50,7 @@ public class Ban implements CommandExecutor {
                         Msg.Player("That Player Isn't Online!", p);
                     }
                 } else {
-                    Msg.Player("Correct Usage = /Ban <Player> <Reason> <Days>", p);
+                    Msg.Player("Correct Usage = /Ban <Player> <Days> <Reason>", p);
                 }
             } 
         }

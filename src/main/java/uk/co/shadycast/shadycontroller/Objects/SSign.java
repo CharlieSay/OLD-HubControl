@@ -7,7 +7,6 @@ import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
 import uk.co.shadycast.shadycontroller.Storage.Config;
-import uk.co.shadycast.shadycontroller.Utils.Msg;
 import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
 
 public class SSign {

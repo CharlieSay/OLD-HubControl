@@ -27,7 +27,6 @@ public class Kick implements CommandExecutor {
                             //TODO Log Kick
                         }else{
                             Msg.Player("You Don't have permmission to kick that person", p);
-                            Msg.Player("Kicker: "+DB.getRankPower(sp.getRank()) + sp.getRank() + " | Kicked: "+DB.getRankPower(ksp.getRank()) + ksp.getRank(), p);
                         }
                     }else{
                         Msg.Player("That player is not online", p);
