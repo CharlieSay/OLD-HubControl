@@ -23,7 +23,7 @@ public class Kick implements CommandExecutor {
                     if(Bukkit.getPlayer(kp).isOnline()){
                         SPlayer ksp = ShadyController.getPlayer(Bukkit.getPlayer(kp));
                         if(DB.getRankPower(sp.getRank()) > DB.getRankPower(ksp.getRank())){
-                            Bukkit.getPlayer(kp).kickPlayer("You where kicked from the server!");
+                            Bukkit.getPlayer(kp).kickPlayer("You were kicked from the server!");
                             //TODO Log Kick
                         }else{
                             Msg.Player("You Don't have permmission to kick that person", p);
