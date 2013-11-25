@@ -153,6 +153,24 @@ public class DB {
         }
         return sp;
     }
+    public static SPlayer getShadyPlayer(String s) {
+        SPlayer sp = null;
+        try {
+            Statement st = con.createStatement();
+            ResultSet r = st.executeQuery("SELECT * FROM Users WHERE Name = '" + s + "'");
+            if (r.next()) {
+                String Rank = r.getString(3);
+                Date FJ = r.getDate(5);
+                Date LJ = r.getDate(6);
+                int c = r.getInt(7);
+                sp = new SPlayer(s, Rank, FJ, LJ, c);
+
+            }
+        } catch (SQLException ex) {
+            Msg.Console("[SQL ERROR] " + ChatColor.RED + ex);
+        }
+        return sp;
+    }
 
     /*public static boolean checkBan(String p) {
      * boolean b = false;
@@ -248,11 +266,11 @@ public class DB {
     public static void addPlayerCoins(SPlayer s, int c) {
         try {
             Statement st1 = con.createStatement();
-            ResultSet r = st1.executeQuery("SELECT * FROM Users WHERE Name =" + s.getName());
+            ResultSet r = st1.executeQuery("SELECT * FROM Users WHERE Name ='" + s.getName()+"'");
             int coins = r.getObject("Coins", Integer.class);
             int CN = coins + c;
             Statement st = con.createStatement();
-            st.executeQuery("UPDATE Users SET Coins=" + CN + " WHERE Name=" + s.getName());
+            st.executeQuery("UPDATE Users SET Coins='" + CN + "' WHERE Name='" + s.getName()+"'");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -262,7 +280,7 @@ public class DB {
         int coins = 0;
         try {
             Statement st = con.createStatement();
-            ResultSet r = st.executeQuery("SELECT * FROM Users WHERE Name =" + s.getName());
+            ResultSet r = st.executeQuery("SELECT * FROM Users WHERE Name ='" + s.getName()+"'");
             if (r.next()) {
                 coins = r.getObject("Coins", Integer.class);
             }

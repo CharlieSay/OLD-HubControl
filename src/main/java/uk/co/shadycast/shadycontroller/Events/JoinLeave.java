@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
 import uk.co.shadycast.shadycontroller.ShadyController;
@@ -49,7 +48,7 @@ public class JoinLeave implements Listener{
             }
         } catch (SQLException ex) {
         }
-        if(b){evt.disallow(PlayerLoginEvent.Result.KICK_BANNED, "Banned until " + fin + " Reason: " + reas);}else{evt.allow();}
+        if(b){evt.disallow(PlayerLoginEvent.Result.KICK_BANNED, "Banned until " + fin + " Reason: " + reas);}
     }
     
     @EventHandler
