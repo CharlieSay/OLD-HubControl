@@ -1,6 +1,8 @@
 package uk.co.shadycast.shadycontroller.Objects;
 
 import java.util.Date;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import uk.co.shadycast.shadycontroller.Storage.DB;
 
 
@@ -21,6 +23,7 @@ public class SPlayer {
     public Date getFirstJoin(){return this.FirstJoin;}
     public Date getLatestJoin(){return this.LatestJoin;}
     public int getCoins(){return this.Coins;}
+    public Player getPlayer(){return Bukkit.getPlayer(getName());}
     
     public void setRank(SRank r){this.Rank = r;DB.setPlayerRank(this, Rank);}
     public void setBanned(boolean b){DB.setPlayerBanned(this, true);}
