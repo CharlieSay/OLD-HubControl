@@ -87,7 +87,11 @@ public class SignEvents implements Listener {
                         SSign s = ShadyController.Signs.get(l);
                         if(!s.getSServer().getStatus().equals(SStatus.InGame)){
                             if(!s.getSServer().getStatus().equals(SStatus.Restarting)){
-                            ShadyController.sendPlayer(p, s.getSServer());
+                                if(s.getSServer().getStatus().equals(SStatus.Full)){
+                                    ShadyController.sendPlayer(p, s.getSServer());
+                                }else{
+                                    Msg.Player(ChatColor.RED + "This server is full donate to be able to join full games!", p); 
+                                }
                             }else{
                                Msg.Player(ChatColor.RED + "Please wait, this server is restarting!", p); 
                             }

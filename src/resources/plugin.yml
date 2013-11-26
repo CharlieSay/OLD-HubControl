@@ -1,0 +1,10 @@
+name: PoliceVSTerrorists
+main: me.epicmiro.pvt.PvT
+version: 1.0
+authors: [Epicmiro]
+
+commands:
+  pvt:
+    description: PvT Commands
+    usage: /pvt (command) (args)
+    aliases: [policevsterrorists, pt]

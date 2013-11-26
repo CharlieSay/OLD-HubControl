@@ -32,7 +32,5 @@ public class SServer {
      this.Port = P;
     }
     public void setStatus(SStatus s){this.Status = s;DB.updateStatus(this, Status.toString());}
-    public void decreaseCurPlayers(int cp){this.CurPlayers = this.CurPlayers - cp;DB.decreaseCurPlayers(this, cp);}
     public void setMaxPlayers(int mp){this.MaxPlayers = mp;DB.updateMaxPlayers(this, MaxPlayers);}
-    
 }

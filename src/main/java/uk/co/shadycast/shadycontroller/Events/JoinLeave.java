@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.Date;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -19,7 +20,7 @@ import uk.co.shadycast.shadycontroller.Utils.Utils;
 
 public class JoinLeave implements Listener{
     
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void Join(PlayerLoginEvent evt){
         boolean b = false;
         Date d = new Date();

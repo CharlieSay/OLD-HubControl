@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
+import uk.co.shadycast.shadycontroller.Objects.SRank;
 import uk.co.shadycast.shadycontroller.ShadyController;
 import uk.co.shadycast.shadycontroller.Storage.DB;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
@@ -19,13 +20,13 @@ public class Rank implements CommandExecutor {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 SPlayer sp = ShadyController.getPlayer(p);
-                if (DB.getRankPower(sp.getRank()) >= 8) {
+                if (sp.getRank().getRankPower() >= 8) {
                     if (args.length == 2) {
                         if (Bukkit.getPlayer(args[0].toString()).isOnline()) {
                             Player pr = Bukkit.getPlayer(args[0].toString());
                             SPlayer spr = ShadyController.getPlayer(pr);
                             String r = args[1].toString();
-                            spr.setRank(r);
+                            spr.setRank(SRank.valueOf(r));
                         }else {
                             Msg.Player("That Player is currently offline!", p);
                         }
@@ -40,7 +41,7 @@ public class Rank implements CommandExecutor {
                 DB.addShadyPlayer(args[0].toString(), "Player", d, d, 0);
                 SPlayer spr = DB.getShadyPlayer(args[0].toString());
                 String r = args[1].toString();
-                spr.setRank(r);
+                spr.setRank(SRank.valueOf(r));
             }
         }
         return false;

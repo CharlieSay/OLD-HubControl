@@ -21,14 +21,14 @@ public class Ban implements CommandExecutor {
         Player p = (Player) sender;
         SPlayer sp = ShadyController.getPlayer(p);
          if (cmd.getLabel().equalsIgnoreCase("Ban")) {
-           if (DB.getRankPower(sp.getRank()) >= 7) {
+           if (sp.getRank().getRankPower() >= 7) {
                 if (args.length > 3) {
                     if (Bukkit.getPlayer(args[0].toString()).isOnline()) {
                         Player bp = Bukkit.getPlayer(args[0].toString());
                         SPlayer bsp = ShadyController.getPlayer(bp);
                         if (Utils.isInt(args[1].toString())) {
                             int length = Integer.parseInt(args[1]);
-                            if (DB.getRankPower(sp.getRank()) > DB.getRankPower(bsp.getRank())) {
+                            if (sp.getRank().getRankPower() > bsp.getRank().getRankPower()) {
                                 int rl = args.length - 2;
                                 String Reason = "";
                                 for(int i=2; i<args.length; i++){

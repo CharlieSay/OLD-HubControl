@@ -2,7 +2,7 @@ package uk.co.shadycast.shadycontroller.Objects;
 
 
 public enum SStatus {
-    Join,InGame,Restarting,Error;
+    Join,InGame,Full,Restarting,Error;
     public static SStatus getStatus(String s){
         SStatus st = SStatus.Error;
         if(s.equalsIgnoreCase(SStatus.Join.toString())){
@@ -11,6 +11,8 @@ public enum SStatus {
             st = SStatus.InGame;
         }else if(s.equalsIgnoreCase(SStatus.Restarting.toString())){
             st = SStatus.Restarting;
+        }else if(s.equalsIgnoreCase(SStatus.Full.toString())){
+            st = SStatus.Full;
         }
         return st;
     }

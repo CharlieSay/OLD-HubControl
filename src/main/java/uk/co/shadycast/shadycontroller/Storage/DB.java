@@ -10,15 +10,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
+import uk.co.shadycast.shadycontroller.Objects.SRank;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
 import uk.co.shadycast.shadycontroller.Objects.SStatus;
 import uk.co.shadycast.shadycontroller.ShadyController;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
-import uk.co.shadycast.shadycontroller.Utils.Utils;
 
 public class DB {
     //Statement st;
@@ -94,7 +93,7 @@ public class DB {
     }
 
     public static void updateCurPlayers(SServer s) {
-        int i = Bukkit.getOnlinePlayers().length;
+        int i = ShadyController.Players.size();
         try {
             Statement st = con.createStatement();
             st.executeUpdate("UPDATE Servers SET CurPlayers = " + i + " WHERE BungeeID= '" + s.getBungeeID() + "'");
@@ -102,16 +101,6 @@ public class DB {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public static void decreaseCurPlayers(SServer s, int i) {
-        try {
-            Statement st = con.createStatement();
-            st.executeUpdate("UPDATE Servers SET CurPlayers = CurPlayers - " + i + " WHERE BungeeID= '" + s.getBungeeID() + "'");
-        } catch (SQLException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public static void updateMaxPlayers(SServer s, int i) {
         try {
             Statement st = con.createStatement();
@@ -145,7 +134,7 @@ public class DB {
                 Date FJ = r.getDate(5);
                 Date LJ = r.getDate(6);
                 int c = r.getInt(7);
-                sp = new SPlayer(p.getName(), Rank, FJ, LJ, c);
+                sp = new SPlayer(p.getName(), SRank.valueOf(Rank), FJ, LJ, c);
 
             }
         } catch (SQLException ex) {
@@ -163,7 +152,7 @@ public class DB {
                 Date FJ = r.getDate(5);
                 Date LJ = r.getDate(6);
                 int c = r.getInt(7);
-                sp = new SPlayer(s, Rank, FJ, LJ, c);
+                sp = new SPlayer(s, SRank.valueOf(Rank), FJ, LJ, c);
 
             }
         } catch (SQLException ex) {
@@ -220,10 +209,10 @@ public class DB {
         }
     }
 
-    public static void setPlayerRank(SPlayer s, String r) {
+    public static void setPlayerRank(SPlayer s, SRank r) {
         try {
             Statement st = con.createStatement();
-            st.execute("UPDATE Users SET Rank='" + r + "' WHERE Name='" + s.getName()+"'");
+            st.execute("UPDATE Users SET Rank='" + r.toString() + "' WHERE Name='" + s.getName()+"'");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }

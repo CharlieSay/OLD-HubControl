@@ -40,6 +40,11 @@ public class SSign {
             s.setLine(0, ChatColor.YELLOW + "[" + server.getStatus().toString() + "]");
             s.setLine(1, ChatColor.GREEN + "" +ChatColor.BOLD + server.getName());
             s.setLine(2, ChatColor.AQUA + Integer.toString(server.getCurPlayers()) + " / " + Integer.toString(server.getMaxPlayers()));
+        } else if (server.getStatus() == SStatus.Full) {
+            s.setLine(3, " ");
+            s.setLine(0, ChatColor.GOLD + "[" + server.getStatus().toString() + "]");
+            s.setLine(1, ChatColor.GREEN + "" +ChatColor.BOLD + server.getName());
+            s.setLine(2, ChatColor.AQUA + Integer.toString(server.getCurPlayers()) + " / " + Integer.toString(server.getMaxPlayers()));
         } else if (server.getStatus() == SStatus.Restarting) {
             s.setLine(2, ChatColor.RED + "" +ChatColor.BOLD + "RESTARTING!");
             s.setLine(1, ChatColor.DARK_RED + "################");

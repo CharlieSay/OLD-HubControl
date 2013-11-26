@@ -121,7 +121,7 @@ public class ShadyController extends JavaPlugin {
                     s.updateSign();
                 }
             }
-        }, 0L, 40L);
+        }, 0L, 15L);
     }
 
     /**
@@ -200,19 +200,20 @@ public class ShadyController extends JavaPlugin {
      * Gets the Join Power for a specified SPlayer
      *
      * @param SP The specified SPlayer
+     * @deprecated Replaced with Enum
      */
     public static int getJoinPower(SPlayer SP) {
-        Msg.Console(SP.getRank());
-       return DB.getJoinPower(SP.getRank());
+       return SP.getRank().getJoinPower();
     }
 
     /**
      * Gets the Rank Power for a specified SPlayer
      *
      * @param SP The specified SPlayer
+     * @deprecated Replaced with Enum
      */
     public static int getRankPower(SPlayer SP) {
-        return DB.getRankPower(SP.getRank());
+        return SP.getRank().getRankPower();
     }
 
     /**
