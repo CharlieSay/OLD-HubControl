@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>uk.co.shadycast</groupId>
-  <artifactId>ShadyController</artifactId>
+  <artifactId>HubController</artifactId>
   <version>1.6</version>
   <packaging>jar</packaging>
 
-  <name>ShadyController</name>
+  <name>HubController</name>
   <url>http://maven.apache.org</url>
 
   <properties>

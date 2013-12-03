@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Objects;
+package uk.hubcontroller.Objects;
 
 
 public enum SStatus {

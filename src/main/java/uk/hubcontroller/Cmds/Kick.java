@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Cmds;
+package uk.hubcontroller.Cmds;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
-import uk.co.shadycast.shadycontroller.ShadyController;
+import uk.co.shadycast.shadycontroller.HubController;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
 
 
@@ -14,13 +14,13 @@ public class Kick implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
         Player p = (Player) sender;
-        SPlayer sp = ShadyController.getPlayer(p);
+        SPlayer sp = HubController.getPlayer(p);
         if(cmd.getLabel().equalsIgnoreCase("kick")){
             if (sp.getRank().getRankPower() >= 7) {
                 if(args.length == 1){
                     String kp = args[0];
                     if(Bukkit.getPlayer(kp).isOnline()){
-                        SPlayer ksp = ShadyController.getPlayer(Bukkit.getPlayer(kp));
+                        SPlayer ksp = HubController.getPlayer(Bukkit.getPlayer(kp));
                         if(sp.getRank().getRankPower() > ksp.getRank().getRankPower()){
                             Bukkit.getPlayer(kp).kickPlayer("You were kicked from the server!");
                             //TODO Log Kick

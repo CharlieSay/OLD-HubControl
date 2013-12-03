@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Storage;
+package uk.hubcontroller.Storage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,7 +16,7 @@ import uk.co.shadycast.shadycontroller.Objects.SPlayer;
 import uk.co.shadycast.shadycontroller.Objects.SRank;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
 import uk.co.shadycast.shadycontroller.Objects.SStatus;
-import uk.co.shadycast.shadycontroller.ShadyController;
+import uk.co.shadycast.shadycontroller.HubController;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
 
 public class DB {
@@ -41,7 +41,7 @@ public class DB {
     }
 
     public static void updateServer(SServer ss) {
-        SServer s = ShadyController.Servers.get(ss.getBungeeID());
+        SServer s = HubController.Servers.get(ss.getBungeeID());
         try {
             Statement st = con.createStatement();
             ResultSet r = st.executeQuery("SELECT * FROM Servers WHERE BungeeID = '" + ss.getBungeeID() + "'");
@@ -93,7 +93,7 @@ public class DB {
     }
 
     public static void updateCurPlayers(SServer s) {
-        int i = ShadyController.Players.size();
+        int i = HubController.Players.size();
         try {
             Statement st = con.createStatement();
             st.executeUpdate("UPDATE Servers SET CurPlayers = " + i + " WHERE BungeeID= '" + s.getBungeeID() + "'");
@@ -197,13 +197,13 @@ public class DB {
             Statement st = con.createStatement();
             st.executeUpdate("INSERT INTO Bans (Name,Banner,Reason,StartDate,EndDate) "
                     + "VALUES ('" + Name + "','" + Banner + "','" + Reason + "','"
-                    + ShadyController.banDateFormat.format(StartDate) + "','"
-                    + ShadyController.banDateFormat.format(EndDate) + "')");
+                    + HubController.banDateFormat.format(StartDate) + "','"
+                    + HubController.banDateFormat.format(EndDate) + "')");
             Statement st2 = con.createStatement();
             st2.executeUpdate("INSERT INTO OldBans (Name,Banner,Reason,StartDate,EndDate) "
                     + "VALUES ('" + Name + "','" + Banner + "','" + Reason + "','"
-                    + ShadyController.banDateFormat.format(StartDate) + "','"
-                    + ShadyController.banDateFormat.format(EndDate) + "')");
+                    + HubController.banDateFormat.format(StartDate) + "','"
+                    + HubController.banDateFormat.format(EndDate) + "')");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -226,7 +226,7 @@ public class DB {
             ResultSet rs = st2.executeQuery("SELECT * FROM Users WHERE Name = '" + N + "'");
             if (!rs.next()) {
                 Msg.All("Welcome " + N + " to the server for the first time everyone!");
-                st.execute("INSERT INTO Users (Name,Rank,FirstJoin,LatestJoin,Coins) VALUES ('" + N + "','" + R + "','" + ShadyController.dateFormat.format(FJ) + "','" + ShadyController.dateFormat.format(LJ) + "','" + c + "')");
+                st.execute("INSERT INTO Users (Name,Rank,FirstJoin,LatestJoin,Coins) VALUES ('" + N + "','" + R + "','" + HubController.dateFormat.format(FJ) + "','" + HubController.dateFormat.format(LJ) + "','" + c + "')");
             } else {
             }
         } catch (SQLException ex) {
@@ -246,7 +246,7 @@ public class DB {
     public static void setPlayerLatestJoin(String PName, Date d) {
         try {
             Statement st = con.createStatement();
-            st.execute("UPDATE Users SET LatestJoin='" + ShadyController.dateFormat.format(d) + "' WHERE Name='" + PName + "'");
+            st.execute("UPDATE Users SET LatestJoin='" + HubController.dateFormat.format(d) + "' WHERE Name='" + PName + "'");
         } catch (SQLException ex) {
             Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }

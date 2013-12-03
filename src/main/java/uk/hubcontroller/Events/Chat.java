@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Events;
+package uk.hubcontroller.Events;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -7,16 +7,16 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
 import uk.co.shadycast.shadycontroller.Objects.SRank;
-import uk.co.shadycast.shadycontroller.ShadyController;
+import uk.co.shadycast.shadycontroller.HubController;
 
 
 public class Chat implements Listener{
     
     @EventHandler
     public void onChat(AsyncPlayerChatEvent evt){
-        if(ShadyController.ChatActive){
+        if(HubController.ChatActive){
         Player p = evt.getPlayer();
-        SPlayer sp = ShadyController.getPlayer(p);
+        SPlayer sp = HubController.getPlayer(p);
         String msg = evt.getMessage();
         
         SRank R = sp.getRank();

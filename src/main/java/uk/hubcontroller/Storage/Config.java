@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Storage;
+package uk.hubcontroller.Storage;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import uk.co.shadycast.shadycontroller.Objects.SSign;
-import uk.co.shadycast.shadycontroller.ShadyController;
+import uk.co.shadycast.shadycontroller.HubController;
 import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
 
 public class Config {
@@ -20,7 +20,7 @@ public class Config {
         List<String> Signs = (List<String>) config.getList("ShadyController.Signs");
         String[] Signss = Signs.toArray(new String[0]);
         if(!Signs.isEmpty()){
-        for(String s:Signss){ss.put(stringToLocation(s),new SSign(ShadyController.getServer(getBungeeID(s)),stringToLocation(s)));}
+        for(String s:Signss){ss.put(stringToLocation(s),new SSign(HubController.getServer(getBungeeID(s)),stringToLocation(s)));}
         }
         
         return ss;

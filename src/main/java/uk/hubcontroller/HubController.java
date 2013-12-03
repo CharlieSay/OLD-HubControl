@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller;
+package uk.hubcontroller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -28,7 +28,7 @@ import uk.co.shadycast.shadycontroller.Storage.DB;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
 import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
 
-public class ShadyController extends JavaPlugin {
+public class HubController extends JavaPlugin {
 
     public static HashMap<String, SServer> Servers;
     public static HashMap<String, SPlayer> Players;
@@ -217,7 +217,7 @@ public class ShadyController extends JavaPlugin {
     }
 
     /**
-     * Checks if the specified server is currently loaded in the ShadyController
+     * Checks if the specified server is currently loaded in the HubController
      *
      * @param BungeeID the ID for the server
      */

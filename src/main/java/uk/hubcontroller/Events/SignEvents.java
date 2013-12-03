@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Events;
+package uk.hubcontroller.Events;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import uk.co.shadycast.shadycontroller.Objects.SServer;
 import uk.co.shadycast.shadycontroller.Objects.SSign;
 import uk.co.shadycast.shadycontroller.Objects.SStatus;
-import uk.co.shadycast.shadycontroller.ShadyController;
+import uk.co.shadycast.shadycontroller.HubController;
 import uk.co.shadycast.shadycontroller.Storage.Config;
 import uk.co.shadycast.shadycontroller.Utils.Msg;
 import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
@@ -29,16 +29,16 @@ public class SignEvents implements Listener {
         Player p = evt.getPlayer();
         if (evt.getLine(0).equalsIgnoreCase("[SSign]")) {
             if (!evt.getLine(1).isEmpty()) {
-                if (ShadyController.serverExsists(evt.getLine(1))) {
+                if (HubController.serverExsists(evt.getLine(1))) {
                     Msg.Player("Creating Sign!", p);
                     SServer ss;
-                    ss = ShadyController.getServer(evt.getLine(1));
+                    ss = HubController.getServer(evt.getLine(1));
                     SSign ssign = new SSign(ss, evt.getBlock().getLocation());
-                    if (ShadyController.signsActive) {
-                        ShadyController.Signs.put(evt.getBlock().getLocation(), ssign);
+                    if (HubController.signsActive) {
+                        HubController.Signs.put(evt.getBlock().getLocation(), ssign);
                     } else {
-                        ShadyController.Signs = new HashMap<Location, SSign>();
-                        ShadyController.Signs.put(evt.getBlock().getLocation(), ssign);
+                        HubController.Signs = new HashMap<Location, SSign>();
+                        HubController.Signs.put(evt.getBlock().getLocation(), ssign);
                     }
                     ssign.SaveSign();
                 } else {
@@ -55,18 +55,18 @@ public class SignEvents implements Listener {
     public void BBreak(BlockBreakEvent evt) {
        if(evt.getBlock().getType() == Material.SIGN || evt.getBlock().getType() == Material.WALL_SIGN || evt.getBlock().getType() == Material.SIGN_POST){
            Location l = evt.getBlock().getLocation();
-       if(!ShadyController.Signs.isEmpty()){
-        if (ShadyController.Signs.containsKey(l)) {
+       if(!HubController.Signs.isEmpty()){
+        if (HubController.Signs.containsKey(l)) {
             FileConfiguration config = pluginUtils.getConfig();
             List<String> ls;
-            SSign s = ShadyController.Signs.get(l);
+            SSign s = HubController.Signs.get(l);
 
             if (config.isSet("ShadyController.Signs")) {
                 ls = (List<String>) config.getList("ShadyController.Signs");
                 ls.remove(Config.locationToString(l) + "," + s.getSServer().getBungeeID());
                 config.set("ShadyController.Signs", ls);
                 pluginUtils.getPlugin().saveConfig();
-                ShadyController.Signs.remove(l);
+                HubController.Signs.remove(l);
                 Msg.Player("Sign Removed", evt.getPlayer());
             }
         }
@@ -76,19 +76,19 @@ public class SignEvents implements Listener {
     public static ArrayList<String> cd;
     @EventHandler
     public void Click(PlayerInteractEvent evt) {
-        if (ShadyController.signsActive) {
+        if (HubController.signsActive) {
             if (evt.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 if (evt.getClickedBlock().getType().equals(Material.WALL_SIGN) || evt.getClickedBlock().getType().equals(Material.SIGN)  || evt.getClickedBlock().getType() == Material.SIGN_POST) {
                     Location l = evt.getClickedBlock().getLocation();
-                    if (ShadyController.Signs.containsKey(l)) {
+                    if (HubController.Signs.containsKey(l)) {
                         if(!cd.contains(evt.getPlayer().getName())){
                         Player p = evt.getPlayer();
                         coolDown(p.getName());
-                        SSign s = ShadyController.Signs.get(l);
+                        SSign s = HubController.Signs.get(l);
                         if(!s.getSServer().getStatus().equals(SStatus.InGame)){
                             if(!s.getSServer().getStatus().equals(SStatus.Restarting)){
                                 if(s.getSServer().getStatus().equals(SStatus.Full)){
-                                    ShadyController.sendPlayer(p, s.getSServer());
+                                    HubController.sendPlayer(p, s.getSServer());
                                 }else{
                                     Msg.Player(ChatColor.RED + "This server is full donate to be able to join full games!", p); 
                                 }

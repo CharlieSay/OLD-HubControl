@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Objects;
+package uk.hubcontroller.Objects;
 
 import java.util.Date;
 import org.bukkit.Bukkit;

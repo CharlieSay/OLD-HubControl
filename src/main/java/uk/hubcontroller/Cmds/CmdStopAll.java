@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Cmds;
+package uk.hubcontroller.Cmds;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

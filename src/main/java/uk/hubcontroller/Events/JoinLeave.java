@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller.Events;
+package uk.hubcontroller.Events;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import uk.co.shadycast.shadycontroller.Objects.SPlayer;
-import uk.co.shadycast.shadycontroller.ShadyController;
+import uk.co.shadycast.shadycontroller.HubController;
 import uk.co.shadycast.shadycontroller.Storage.DB;
 import static uk.co.shadycast.shadycontroller.Storage.DB.con;
 import uk.co.shadycast.shadycontroller.Utils.Utils;
@@ -59,16 +59,16 @@ public class JoinLeave implements Listener{
         SPlayer sp;
         DB.addShadyPlayer(p.getName(), "Player", d, d, 0);
         sp = DB.getShadyPlayer(evt.getPlayer());
-        ShadyController.Players.put(p.getName(), sp);
+        HubController.Players.put(p.getName(), sp);
         DB.setPlayerLatestJoin(sp.getName(), d);
-        DB.updateCurPlayers(ShadyController.getThisServer());
+        DB.updateCurPlayers(HubController.getThisServer());
     }
     
     @EventHandler
     public void Leave(PlayerQuitEvent evt){
         Player p = evt.getPlayer();
-        SPlayer sp = ShadyController.getPlayer(p);
-        if(ShadyController.Players.containsKey(sp.getName())){ShadyController.Players.remove(sp.getName());}else{}
-        DB.updateCurPlayers(ShadyController.getThisServer());
+        SPlayer sp = HubController.getPlayer(p);
+        if(HubController.Players.containsKey(sp.getName())){HubController.Players.remove(sp.getName());}else{}
+        DB.updateCurPlayers(HubController.getThisServer());
     } 
 }

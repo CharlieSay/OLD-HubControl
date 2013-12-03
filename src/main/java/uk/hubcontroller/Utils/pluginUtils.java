@@ -1,21 +1,21 @@
-package uk.co.shadycast.shadycontroller.Utils;
+package uk.hubcontroller.Utils;
 
 
 
 import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
-import uk.co.shadycast.shadycontroller.ShadyController;
+import uk.co.shadycast.shadycontroller.HubController;
 
 
 
 public class pluginUtils {
     
-    private static ShadyController plugin;
+    private static HubController plugin;
  
-   public static void setPlugin(ShadyController plugin){
+   public static void setPlugin(HubController plugin){
       pluginUtils.plugin = plugin;
    }
- public static ShadyController getPlugin(){
+ public static HubController getPlugin(){
       return plugin;
    }
    public static Server getServer(){
