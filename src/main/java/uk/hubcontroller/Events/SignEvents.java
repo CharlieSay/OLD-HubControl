@@ -14,13 +14,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import uk.co.shadycast.shadycontroller.Objects.SServer;
-import uk.co.shadycast.shadycontroller.Objects.SSign;
-import uk.co.shadycast.shadycontroller.Objects.SStatus;
-import uk.co.shadycast.shadycontroller.HubController;
-import uk.co.shadycast.shadycontroller.Storage.Config;
-import uk.co.shadycast.shadycontroller.Utils.Msg;
-import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
+import uk.hubcontroller.Objects.SServer;
+import uk.hubcontroller.Objects.SSign;
+import uk.hubcontroller.Objects.SStatus;
+import uk.hubcontroller.HubController;
+import uk.hubcontroller.Storage.Config;
+import uk.hubcontroller.Utils.Msg;
+import uk.hubcontroller.Utils.pluginUtils;
 
 public class SignEvents implements Listener {
 

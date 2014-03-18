@@ -6,8 +6,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.configuration.file.FileConfiguration;
-import uk.co.shadycast.shadycontroller.Storage.Config;
-import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
+import uk.hubcontroller.Storage.Config;
+import uk.hubcontroller.Utils.pluginUtils;
 
 public class SSign {
 
@@ -62,14 +62,14 @@ public class SSign {
     public void SaveSign() {
         FileConfiguration config = pluginUtils.getConfig();
         List<String> ls;
-        if (config.isSet("ShadyController.Signs")) {
-            ls = (List<String>) config.getList("ShadyController.Signs");
+        if (config.isSet("TheHub.Signs")) {
+            ls = (List<String>) config.getList("TheHub.Signs");
             ls.add(Config.locationToString(loc) + "," + server.getBungeeID());
         } else {
             ls = new ArrayList<String>();
             ls.add(Config.locationToString(loc) + "," + server.getBungeeID());
         }
-        config.set("ShadyController.Signs", ls);
+        config.set("TheHub.Signs", ls);
         pluginUtils.getPlugin().saveConfig();
     }
 }

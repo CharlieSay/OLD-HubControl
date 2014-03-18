@@ -1,6 +1,6 @@
 package uk.hubcontroller.Objects;
 
-import uk.co.shadycast.shadycontroller.Storage.DB;
+import uk.hubcontroller.Storage.DB;
 
 public class SServer {
     String Type;

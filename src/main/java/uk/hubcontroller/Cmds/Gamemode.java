@@ -1,16 +1,5 @@
 package uk.hubcontroller.Cmds;
 
-import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import uk.co.shadycast.shadycontroller.Objects.SPlayer;
-import uk.co.shadycast.shadycontroller.HubController;
-import uk.co.shadycast.shadycontroller.Storage.DB;
-import uk.co.shadycast.shadycontroller.Utils.Msg;
-import uk.co.shadycast.shadycontroller.Utils.Utils;
-
 
 public class Gamemode /*implements CommandExecutor {
  * @Override

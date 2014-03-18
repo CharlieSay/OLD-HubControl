@@ -1,7 +1,7 @@
-main: uk.co.shadycast.shadycontroller.ShadyController
-name: Shady Controller
+main: uk.hubcontroller
+name: Hub Controller
 version: 1.0
-loadbefore: [Paintball,Shady Hub, Claim]
+loadbefore: [Paintball, Hub, Claim]
 commands:
   Ban:
   Rank:

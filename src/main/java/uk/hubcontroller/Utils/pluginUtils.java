@@ -4,7 +4,7 @@ package uk.hubcontroller.Utils;
 
 import org.bukkit.Server;
 import org.bukkit.configuration.file.FileConfiguration;
-import uk.co.shadycast.shadycontroller.HubController;
+import uk.hubcontroller.HubController;
 
 
 

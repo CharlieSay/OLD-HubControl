@@ -12,12 +12,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import uk.co.shadycast.shadycontroller.Objects.SPlayer;
-import uk.co.shadycast.shadycontroller.Objects.SRank;
-import uk.co.shadycast.shadycontroller.Objects.SServer;
-import uk.co.shadycast.shadycontroller.Objects.SStatus;
-import uk.co.shadycast.shadycontroller.HubController;
-import uk.co.shadycast.shadycontroller.Utils.Msg;
+import uk.hubcontroller.Objects.SPlayer;
+import uk.hubcontroller.Objects.SRank;
+import uk.hubcontroller.Objects.SServer;
+import uk.hubcontroller.Objects.SStatus;
+import uk.hubcontroller.HubController;
+import uk.hubcontroller.Utils.Msg;
 
 public class DB {
     //Statement st;
@@ -28,7 +28,7 @@ public class DB {
     public static Connection con;
 
     public static void init() {
-        String url = "jdbc:mysql://localhost:3306/ShadyController";
+        String url = "jdbc:mysql://localhost:3306/TheHubDB";
         String User = "minecraft";
         String Pass = "cheeseBALLS123";
 

@@ -5,9 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import uk.co.shadycast.shadycontroller.Objects.SPlayer;
-import uk.co.shadycast.shadycontroller.Objects.SRank;
-import uk.co.shadycast.shadycontroller.HubController;
+import uk.hubcontroller.Objects.SPlayer;
+import uk.hubcontroller.Objects.SRank;
+import uk.hubcontroller.HubController;
 
 
 public class Chat implements Listener{

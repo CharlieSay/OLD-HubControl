@@ -6,9 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
-import uk.co.shadycast.shadycontroller.Objects.SSign;
-import uk.co.shadycast.shadycontroller.HubController;
-import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
+import uk.hubcontroller.Objects.SSign;
+import uk.hubcontroller.HubController;
+import uk.hubcontroller.Utils.pluginUtils;
 
 public class Config {
     
@@ -17,7 +17,7 @@ public class Config {
         HashMap<Location, SSign> ss = new HashMap<Location, SSign>();
         FileConfiguration config = pluginUtils.getConfig();
         
-        List<String> Signs = (List<String>) config.getList("ShadyController.Signs");
+        List<String> Signs = (List<String>) config.getList("TheHub.Signs");
         String[] Signss = Signs.toArray(new String[0]);
         if(!Signs.isEmpty()){
         for(String s:Signss){ss.put(stringToLocation(s),new SSign(HubController.getServer(getBungeeID(s)),stringToLocation(s)));}

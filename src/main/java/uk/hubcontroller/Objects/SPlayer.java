@@ -3,7 +3,7 @@ package uk.hubcontroller.Objects;
 import java.util.Date;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import uk.co.shadycast.shadycontroller.Storage.DB;
+import uk.hubcontroller.Storage.DB;
 
 
 public class SPlayer {

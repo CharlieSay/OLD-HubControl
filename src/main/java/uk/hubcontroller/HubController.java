@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import uk.co.shadycast.shadycontroller.Objects.SServer;
+import uk.hubcontroller.Objects.SServer;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -14,19 +14,19 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import uk.co.shadycast.shadycontroller.Cmds.Ban;
-import uk.co.shadycast.shadycontroller.Cmds.CmdStopAll;
-import uk.co.shadycast.shadycontroller.Cmds.Kick;
-import uk.co.shadycast.shadycontroller.Cmds.Rank;
-import uk.co.shadycast.shadycontroller.Events.Chat;
-import uk.co.shadycast.shadycontroller.Events.JoinLeave;
-import uk.co.shadycast.shadycontroller.Events.SignEvents;
-import uk.co.shadycast.shadycontroller.Objects.SPlayer;
-import uk.co.shadycast.shadycontroller.Objects.SSign;
-import uk.co.shadycast.shadycontroller.Storage.Config;
-import uk.co.shadycast.shadycontroller.Storage.DB;
-import uk.co.shadycast.shadycontroller.Utils.Msg;
-import uk.co.shadycast.shadycontroller.Utils.pluginUtils;
+import uk.hubcontroller.Cmds.Ban;
+import uk.hubcontroller.Cmds.CmdStopAll;
+import uk.hubcontroller.Cmds.Kick;
+import uk.hubcontroller.Cmds.Rank;
+import uk.hubcontroller.Events.Chat;
+import uk.hubcontroller.Events.JoinLeave;
+import uk.hubcontroller.Events.SignEvents;
+import uk.hubcontroller.Objects.SPlayer;
+import uk.hubcontroller.Objects.SSign;
+import uk.hubcontroller.Storage.Config;
+import uk.hubcontroller.Storage.DB;
+import uk.hubcontroller.Utils.Msg;
+import uk.hubcontroller.Utils.pluginUtils;
 
 public class HubController extends JavaPlugin {
 
@@ -73,7 +73,7 @@ public class HubController extends JavaPlugin {
         }
         SignEvents.cd = new ArrayList<String>();
         Msg.Console("Config import");
-        if (pluginUtils.getConfig().isSet("ShadyController.Signs")) {
+        if (pluginUtils.getConfig().isSet("HubController.Signs")) {
             Signs = new HashMap<Location, SSign>(Config.importSigns());
             Msg.Console("Importing Signs");
             signsActive = true;
@@ -104,7 +104,7 @@ public class HubController extends JavaPlugin {
         //TODO Fix getCommand("plugins").setExecutor(new CmdStopAll());
         // Msg.All(Boolean.toString(DB.serverExsists(thisBungeeID)));
         // Msg.All(Boolean.toString(DB.serverExsists("asd")));
-        ChatActive = config.getBoolean("ShadyController.Chat",true);
+        ChatActive = config.getBoolean("HubController.Chat",true);
         Msg.Console("Prep Signs Loop");
         if (signsActive) {
             Msg.Console("Starting Sign Loop");

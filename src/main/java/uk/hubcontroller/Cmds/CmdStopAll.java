@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import uk.co.shadycast.shadycontroller.Utils.Msg;
+import uk.hubcontroller.Utils.Msg;
 
 
 public class CmdStopAll implements CommandExecutor {

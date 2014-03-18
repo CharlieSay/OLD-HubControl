@@ -1,4 +1,4 @@
-package uk.co.shadycast.shadycontroller;
+package uk.hubcontroller;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

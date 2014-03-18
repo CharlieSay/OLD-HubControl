@@ -7,11 +7,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import uk.co.shadycast.shadycontroller.Objects.SPlayer;
-import uk.co.shadycast.shadycontroller.Objects.SRank;
-import uk.co.shadycast.shadycontroller.HubController;
-import uk.co.shadycast.shadycontroller.Storage.DB;
-import uk.co.shadycast.shadycontroller.Utils.Msg;
+import uk.hubcontroller.Objects.SPlayer;
+import uk.hubcontroller.Objects.SRank;
+import uk.hubcontroller.HubController;
+import uk.hubcontroller.Storage.DB;
+import uk.hubcontroller.Utils.Msg;
 
 public class Rank implements CommandExecutor {
 

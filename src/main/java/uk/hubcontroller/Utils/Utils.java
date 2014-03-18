@@ -7,7 +7,7 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import uk.co.shadycast.shadycontroller.Objects.SServer;
+import uk.hubcontroller.Objects.SServer;
 
 
 public class Utils {

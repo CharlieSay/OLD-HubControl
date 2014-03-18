@@ -11,11 +11,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import uk.co.shadycast.shadycontroller.Objects.SPlayer;
-import uk.co.shadycast.shadycontroller.HubController;
-import uk.co.shadycast.shadycontroller.Storage.DB;
-import static uk.co.shadycast.shadycontroller.Storage.DB.con;
-import uk.co.shadycast.shadycontroller.Utils.Utils;
+import uk.hubcontroller.Objects.SPlayer;
+import uk.hubcontroller.HubController;
+import uk.hubcontroller.Storage.DB;
+import uk.hubcontroller.Utils.Utils;
 
 
 public class JoinLeave implements Listener{
